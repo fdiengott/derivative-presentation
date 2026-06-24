@@ -1,0 +1,50 @@
+<!-- The reusable payoff-chart base. Axes are static ("taught once"); the payoff
+     line and caption are fragments that animate on click. Reused later by the
+     forward / future / option slides. -->
+<section data-viz="payoff-base">
+  <p class="kicker">The farmer's chart</p>
+  <svg
+    class="viz"
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="Payoff chart: what the farmer walks away with versus the market price at harvest"
+  >
+    <!-- axes (taught once, then reused on future/option) -->
+    <line class="axis" x1="70" y1="40" x2="70" y2="340" />
+    <line class="axis" x1="70" y1="340" x2="610" y2="340" />
+    <!-- arrowhead-ish tips -->
+    <polyline class="axis" points="64,52 70,40 76,52" />
+    <polyline class="axis" points="598,334 610,340 598,346" />
+
+    <text class="axis-label" x="340" y="386" text-anchor="middle">
+      market price at harvest →
+    </text>
+    <text
+      class="axis-label"
+      x="20"
+      y="190"
+      text-anchor="middle"
+      transform="rotate(-90 20 190)"
+    >
+      ↑ what the farmer walks away with
+    </text>
+
+    <!-- the payoff line — flat = certainty. Draws on the first click. -->
+    <path
+      class="payoff drawable fragment"
+      data-fragment-index="0"
+      pathLength="1"
+      d="M 95 195 L 585 195"
+    />
+  </svg>
+
+  <p class="thesis reveal-in fragment" data-fragment-index="1">
+    Certainty looks <span class="accent">flat</span>.
+  </p>
+
+  <aside class="notes">
+    Phase 1 verification slide. Axes are taught once here and reused by the
+    future and option charts. Click 1 draws the flat payoff line; click 2 rises
+    in the caption.
+  </aside>
+</section>

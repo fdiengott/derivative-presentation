@@ -20,9 +20,13 @@ slide. Thin, precise SVG strokes. Present in Chrome.
 ## File layout
 
 ```
-index.html              # all slides as <section> elements + reveal.js includes
-css/theme.css           # minimal theme: typography, color, spacing, SVG anim keyframes
-js/visuals.js           # listens to Reveal 'fragmentshown'/'slidechanged' to toggle SVG classes
+index.html              # shell: <link>/<script> tags + data-include slide placeholders
+slides/*.html           # one file per slide (full <section>), pulled in by includes.js
+css/base.css            # palette, typography, layout, chrome, timing vars, reveal-in
+css/viz.css             # SVG visual system: axes, payoff/market lines, anim primitives
+js/includes.js          # fetch-based HTML partial loader (data-include)
+js/anim.js              # data-anim hooks (click on one element animates another)
+js/main.js              # orchestrator: load includes → Reveal.initialize → wire anim
 vendor/reveal/          # vendored reveal.js dist (offline)
 assets/                 # any static SVG/illustration bits, if needed
 ```
@@ -71,14 +75,14 @@ horizontal = market price at harvest, vertical = what the farmer walks away with
 
 ### Phase 0 — Setup
 
-- [ ] **1.** `pnpm add reveal.js`.
-- [ ] **2.** Vendor offline: copy `node_modules/reveal.js/dist` →
-      `vendor/reveal/dist` and `node_modules/reveal.js/plugin` →
-      `vendor/reveal/plugin`.
-- [ ] **3.** Scaffold `index.html`, `css/theme.css`, `js/visuals.js`, `assets/`.
-- [ ] **4.** Wire reveal.js + notes plugin in `index.html`; call
-      `Reveal.initialize` (enable notes plugin, set transition). Confirm a
-      placeholder slide renders in Chrome.
+- [x] **1.** `pnpm add reveal.js`.
+- [x] **2.** Vendor offline: copy `node_modules/reveal.js/dist` →
+      `vendor/reveal/dist` (v6 bundles plugins under `dist/plugin`, so the whole
+      `dist` covers reveal + notes plugin + themes).
+- [x] **3.** Scaffold `index.html`, `css/theme.css`, `js/visuals.js`, `assets/`.
+- [x] **4.** Wire reveal.js + notes plugin in `index.html`; call
+      `Reveal.initialize` (notes plugin enabled, slide transition). Placeholder
+      slides render, fragments reveal, speaker view works.
 
 ### Phase 1 — Theme & mechanics
 

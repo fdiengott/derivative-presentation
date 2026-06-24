@@ -1,0 +1,90 @@
+/* SVG visual system — payoff charts and flow diagrams.
+ * Charts are inline <svg class="viz"> sharing one coordinate space.
+ * Strokes use vector-effect so widths stay crisp regardless of scaling. */
+
+.reveal svg.viz {
+  display: block;
+  margin: 0.4em auto 0;
+  width: 64%;
+  height: auto;
+  overflow: visible;
+}
+
+.viz .stroke,
+.viz .axis,
+.viz .payoff,
+.viz .market,
+.viz .flow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Axes — taught once on the forward, then reused. */
+.viz .axis {
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+.viz .axis-label {
+  fill: var(--muted);
+  font-size: 18px;
+  font-family: inherit;
+}
+.viz .tick-label {
+  fill: var(--muted);
+  font-size: 15px;
+}
+
+/* The farmer's payoff line — the thing that "learns to bend". */
+.viz .payoff {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+/* A reference market line (e.g. where the spot price actually landed). */
+.viz .market {
+  stroke: var(--line);
+  stroke-width: 2;
+  stroke-dasharray: 4 5;
+}
+
+/* Annotation callouts inside a chart. */
+.viz .note {
+  fill: var(--ink);
+  font-size: 16px;
+  font-family: inherit;
+}
+.viz .note.good {
+  fill: var(--good);
+}
+.viz .note.bad {
+  fill: var(--bad);
+}
+
+/* ---- Animation primitives ----
+ * Two triggers, same end state:
+ *   1. CSS-only: give the SVG element class="fragment" so reveal.js toggles
+ *      `.visible` on a click. Preferred — no JS, ordered by reveal naturally.
+ *   2. JS-driven: visuals.js toggles `.draw` / `.show` (used where a click on
+ *      one element must animate a different one, e.g. swap/CDS sequencing).
+ *
+ * Draw-on needs no path measurement: set pathLength="1" on the path, so a
+ * dasharray/offset of 1 == the whole line. */
+
+.viz .drawable {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.viz .drawable.draw,
+.viz .drawable.fragment.visible {
+  transition: stroke-dashoffset var(--t-draw) var(--ease);
+  stroke-dashoffset: 0;
+}
+
+/* reveal.js hides un-shown fragments via opacity; neutralize that for SVG
+ * paths we draw ourselves so the draw (not a fade) is what the eye reads. */
+.viz .drawable.fragment {
+  opacity: 1;
+  visibility: visible;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Derivatives — a tool for moving risk</title>
+
+    <!-- reveal.js core + base theme (overridden by our stylesheets) -->
+    <link rel="stylesheet" href="vendor/reveal/dist/reset.css" />
+    <link rel="stylesheet" href="vendor/reveal/dist/reveal.css" />
+    <link rel="stylesheet" href="vendor/reveal/dist/theme/white.css" id="theme" />
+
+    <!-- our styles: base theme, then the SVG visual system -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/viz.css" />
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Each slide is its own file under slides/, pulled in by includes.js
+           before Reveal initializes. Add a slide by adding a data-include. -->
+      <div class="slides">
+        <div data-include="slides/title.html"></div>
+        <div data-include="slides/payoff-base.html"></div>
+      </div>
+    </div>
+
+    <!-- vendored reveal.js + notes plugin (UMD globals: Reveal, RevealNotes) -->
+    <script src="vendor/reveal/dist/reveal.js"></script>
+    <script src="vendor/reveal/dist/plugin/notes.js"></script>
+
+    <!-- our helpers, then the orchestrator (must load last) -->
+    <script src="js/includes.js"></script>
+    <script src="js/anim.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
