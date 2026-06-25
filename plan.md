@@ -23,7 +23,7 @@ slide. Thin, precise SVG strokes. Present in Chrome.
 index.html              # shell: <link>/<script> tags + data-include slide placeholders
 slides/*.html           # one file per slide (full <section>), pulled in by includes.js
 css/base.css            # palette, typography, layout, chrome, timing vars, reveal-in
-css/viz.css             # SVG visual system: axes, payoff/market lines, anim primitives
+css/viz.css             # SVG visual system: axes, spot/locked/outcome lines, anim primitives
 js/includes.js          # fetch-based HTML partial loader (data-include)
 js/anim.js              # data-anim hooks (click on one element animates another)
 js/main.js              # orchestrator: load includes → Reveal.initialize → wire anim
@@ -45,19 +45,26 @@ assets/                 # any static SVG/illustration bits, if needed
 
 ## Visual specs (reference for the build steps)
 
-**Payoff charts — "a line that learns to bend"** (teach axes ONCE on the forward;
-horizontal = market price at harvest, vertical = what the farmer walks away with):
+**Temporal charts — one chart type for the whole farmer staircase** (teach axes
+ONCE on the forward; **X = time** today→harvest, **Y = price** in dollars; a
+**dashed** line = spot wandering over the season, a **solid flat** line = the
+locked forward/strike price). One world per chart; show the range of outcomes by
+rendering multiple versions in sequence — the multi-world reveal and the chart are
+the same mechanism now. **No payoff diagram / hockey stick — Chart B is abandoned.**
 
-- _Forward_ = flat horizontal SVG line. Multi-world sequence as fragments on the
-  same chart: (1) flat line alone, (2) price crashes → market line drops below
-  the lock → forward saved him, (3) price soars → market rises above the lock →
-  forward cost him, (4) optional near-the-lock world, (5) crystallize the cage.
-- _Future_ = reuse the identical payoff line; distinct visual is a trade-staging
+- _Forward_ = flat locked SVG line vs. a wandering dashed spot line. Multi-world
+  sequence (each its own slide/reveal): (1) flat line alone = certainty, (2) spot
+  ends below the lock → forward saved him, (3) spot ends above the lock → forward
+  cost him, (4) optional near-the-lock world, (5) crystallize the cage. The flat
+  line is "the locked price" — never anchored to or labelled against today's spot.
+- _Future_ = reuse the identical temporal chart; distinct visual is a trade-staging
   SVG: a handshake replaced by a clearinghouse "referee" between two strangers.
-- _Option_ = the line bends into a hockey stick, animated from the forward's flat
-  line on a click (CSS animation of the SVG path `d`, or cross-fade between a flat
-  and a bent `<path>`). Premium = whole line nudged slightly down. Reuse the
-  multi-world device to show it wins in both good and bad years, minus premium.
+- _Option_ = the same temporal chart with a third **outcome line**. At t=0 the
+  outcome line sits slightly below the flat (the premium, a real upfront cost).
+  Up-world: spot crosses the strike and the outcome line **lifts off** the flat and
+  rides the spot up — the single most important animation beat in the farmer's arc.
+  Down-world: spot never crosses; outcome line stays flat at strike-minus-premium.
+  Reuse the multi-world device to show it wins in both good and bad years.
 
 **Flow visuals — axes retire, arrows arrive:**
 
@@ -72,6 +79,10 @@ horizontal = market price at harvest, vertical = what the farmer walks away with
   flows back to make her whole. Rhymes with the option's premium-for-protection.
 
 ## Build steps (check off as you go)
+
+> `[~]` = previously built under the abandoned payoff-diagram grammar; needs rework
+> to the temporal-chart grammar (see Visual specs). Slide files exist but their
+> charts must be rebuilt.
 
 ### Phase 0 — Setup
 
@@ -92,8 +103,8 @@ horizontal = market price at harvest, vertical = what the farmer walks away with
 - [x] **6.** Animation mechanics: CSS-via-fragment (`.fragment.visible`) for the
       common case + JS `data-anim` hooks in `js/anim.js` for cross-element
       sequencing. Draw-on uses `pathLength="1"` (no JS measurement).
-- [x] **7.** Reusable SVG payoff-chart base (axes taught once, drawable payoff
-      line) in `slides/payoff-base.html`.
+- [x] **7.** Reusable SVG temporal-chart base (axes taught once: X=time, Y=price;
+      dashed spot line + solid flat locked line) in `slides/payoff-base.html`.
 
 ### Phase 2 — Movement 1: The Ache
 
@@ -110,19 +121,26 @@ horizontal = market price at harvest, vertical = what the farmer walks away with
 
 ### Phase 3 — Movement 2: The Farmer's Staircase
 
-- [x] **12.** Forward (`slides/forward.html`): handshake locks a price; axes
-      taught once; flat line draws = certainty.
-- [x] **13.** Forward worlds (`slides/forward-worlds.html`): one persistent chart;
-      fragments step through crash / soar / near-lock against the unhedged
-      diagonal.
-- [x] **14.** The cage (`slides/forward-cage.html`): shaded foregone upside; "a
-      bet you've chosen to stop playing"; new flaw = needs a trusted counterparty.
+- [x] **12.** Forward (`slides/forward.html`): handshake locks a price; temporal
+      axes taught once (X=time, Y=price); flat locked line draws = certainty.
+- [~] **13.** Forward worlds (`slides/forward-worlds.html`): one persistent
+  temporal chart; fragments step through crash / soar / near-lock as a
+  wandering dashed spot line ending below / above / near the flat locked line.
+  _Rework: rebuilt away from the abandoned payoff-diagram grammar._
+- [~] **14.** The cage (`slides/forward-cage.html`): crystallize the cage via the
+  soar-world (flat locked line below the risen spot = upside foregone); "a bet
+  you've chosen to stop playing"; new flaw = needs a trusted counterparty.
+  _Rework: cage shown through temporal worlds, not a shaded payoff region._
 - [x] **15.** Future (`slides/future.html`): handshake → clearinghouse referee
-      between strangers (same payoff, new plumbing); new flaw = still a cage.
-- [x] **16.** Option (`slides/option.html`): the line bends into a hockey stick
-      over the forward's ghost line; premium gap; floor below strike, upside above.
-- [x] **17.** Option worlds (`slides/option-worlds.html`): wins in crash and soar
-      minus premium; "an option is insurance" — the farmer's happy ending.
+      between strangers (same temporal chart, new plumbing); new flaw = still a cage.
+- [~] **16.** Option (`slides/option.html`): same temporal chart; outcome line
+  sits below the flat at t=0 (premium), then in the up-world lifts off the flat
+  at the strike-crossing and rides the spot upward (the focal animation beat).
+  _Rework: rebuilt away from the abandoned hockey-stick grammar._
+- [~] **17.** Option worlds (`slides/option-worlds.html`): up-world lift-off vs.
+  down-world stay-flat (strike minus premium); wins in both the forward's good
+  and bad years minus premium; "an option is insurance" — the happy ending.
+  _Rework: re-aligned to the temporal multi-world grammar._
 
 ### Phase 4 — The Bridge
 

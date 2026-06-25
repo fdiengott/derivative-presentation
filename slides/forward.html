@@ -1,40 +1,32 @@
-<!-- Forward (Slide 5): lock a price with a handshake. Teach the axes once here.
-     Flat line = certainty. Reused by future + option. -->
+<!-- Forward (Slide 5): lock a price with a handshake. Teach the temporal chart
+     ONCE here: X = time (today → harvest), Y = price. The flat locked line is
+     certainty. This chart type is reused by forward-worlds, future, and option. -->
 <section>
   <p class="kicker">Movement 2 · The staircase</p>
-  <h2>The forward: lock the price with a handshake.</h2>
+  <h2>Forwards: Lock in a price with a handshake.</h2>
 
   <svg
     class="viz"
     viewBox="0 0 640 400"
     role="img"
-    aria-label="Payoff chart with a flat line: a locked-in price"
+    aria-label="A price-over-time chart showing a flat, locked-in price across the season"
   >
-    <!-- axes (taught once) -->
+    <!-- axes, taught once: across is time, up is price -->
     <line class="axis" x1="70" y1="40" x2="70" y2="340" />
     <line class="axis" x1="70" y1="340" x2="610" y2="340" />
     <polyline class="axis" points="64,52 70,40 76,52" />
     <polyline class="axis" points="598,334 610,340 598,346" />
-    <text class="axis-label" x="340" y="386" text-anchor="middle">
-      market price at harvest →
+    <text class="axis-label" x="22" y="190" text-anchor="middle" transform="rotate(-90 22 190)">
+      price ($)
     </text>
-    <text
-      class="axis-label"
-      x="20"
-      y="190"
-      text-anchor="middle"
-      transform="rotate(-90 20 190)"
-    >
-      ↑ what the farmer walks away with
-    </text>
+    <text class="tick-label" x="90" y="364" text-anchor="middle">today</text>
+    <text class="tick-label" x="590" y="364" text-anchor="middle">harvest</text>
 
-    <!-- the locked price: flat across every market outcome. Draws on click. -->
-    <path
-      class="payoff drawable fragment"
-      data-fragment-index="0"
-      pathLength="1"
-      d="M 90 180 L 590 180"
-    />
+    <!-- the locked price: a flat, solid line across the whole season. Draws on click. -->
+    <path class="locked drawable fragment" data-fragment-index="0" pathLength="1" d="M 90 180 L 590 180" />
+    <text class="tick-label fragment" data-fragment-index="0" x="586" y="170" text-anchor="end">
+      locked price
+    </text>
   </svg>
 
   <p class="thesis reveal-in fragment" data-fragment-index="1">
@@ -42,9 +34,12 @@
   </p>
 
   <aside class="notes">
-    He agrees a price today for grain delivered after harvest. Whatever the
-    market does, he walks away with the same number — so the line is flat across
-    every possible market price. Teach the axes here: across is the market price
-    at harvest, up is what he actually pockets.
+    He agrees a price today for grain delivered after harvest — the price you can
+    lock in today for delivery later (never "what the market thinks prices will
+    be"; that conflation is the most common derivatives misconception). Teach the
+    axes here: across is time, from today to harvest; up is price. The locked
+    price is the same number on every day of the season, so it draws as a flat,
+    solid line. Whatever the market does between now and harvest, that line
+    doesn't move. Certainty looks flat.
   </aside>
 </section>

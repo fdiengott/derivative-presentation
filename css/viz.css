@@ -14,6 +14,9 @@
 .viz .axis,
 .viz .payoff,
 .viz .market,
+.viz .locked,
+.viz .spot,
+.viz .outcome,
 .viz .flow {
   fill: none;
   stroke-linecap: round;
@@ -36,7 +39,32 @@
   font-size: 15px;
 }
 
-/* The farmer's payoff line — the thing that "learns to bend". */
+/* ---- Temporal chart lines (X = time, Y = price) ----
+ * The one chart type for the whole farmer staircase. */
+
+/* The locked price: a flat, solid, highlighted horizontal line — the
+ * forward/strike. The certainty the instrument buys. */
+.viz .locked {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+/* The spot price: a dashed line wandering over the season. */
+.viz .spot {
+  stroke: var(--line);
+  stroke-width: 2.5;
+  stroke-dasharray: 5 6;
+}
+
+/* The option's outcome line: what the farmer actually walks away with. The
+ * star of the option slides — it lifts off the flat at the strike-crossing. */
+.viz .outcome {
+  stroke: var(--good);
+  stroke-width: 3.5;
+}
+
+/* Legacy payoff line (Chart B) — retained only until the staircase rework is
+ * complete; do not use in new slides. */
 .viz .payoff {
   stroke: var(--accent);
   stroke-width: 3;
@@ -89,11 +117,17 @@
   stroke: var(--line);
 }
 
-/* Shaded region: the upside a forward gives up above the strike (the cage). */
+/* Shaded regions on the cage: the downside the forward avoids (good) and the
+ * upside it gives up (bad), on opposite sides of the strike. */
 .viz .cage-fill {
-  fill: var(--bad);
-  opacity: 0.12;
+  opacity: 0.14;
   stroke: none;
+}
+.viz .cage-fill.good {
+  fill: var(--good);
+}
+.viz .cage-fill.bad {
+  fill: var(--bad);
 }
 
 /* Trade-staging (future slide): two strangers + a clearinghouse referee. */
@@ -144,7 +178,7 @@
 }
 
 /* A field of wheat — abundance. Line-art ears in the grain tone. */
-.viz .stalk {
+.stalk {
   fill: none;
   stroke: var(--grain);
   stroke-width: 2;
@@ -162,6 +196,14 @@
  *
  * Draw-on needs no path measurement: set pathLength="1" on the path, so a
  * dasharray/offset of 1 == the whole line. */
+
+/* Multi-world reveals (e.g. forward-worlds): each world's group fades in/out as
+ * one. Override reveal's brisk default with the deck's fade timing/easing so
+ * every world — not just the first — visibly fades its line + text in and out.
+ * Keep `all` (not just opacity) so `visibility` still flips with the fade. */
+.viz .fragment.fade-in-then-out {
+  transition: all var(--t-fade) var(--ease);
+}
 
 .viz .drawable {
   stroke-dasharray: 1;

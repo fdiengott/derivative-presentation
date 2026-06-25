@@ -1,5 +1,7 @@
-<!-- The cage (step 14): the forward caps the upside, by design. This ache
-     launches the future, then the option. -->
+<!-- The cage (step 14): the forward is symmetric. Below the strike it avoids the
+     downside; above it, it gives up the upside. Show each face in turn (downside
+     first), fading between them, then land on the bare flat line: a bet you've
+     chosen to stop playing. -->
 <section>
   <p class="kicker">Movement 2 · The staircase</p>
   <h2>He can never win big. By design.</h2>
@@ -8,7 +10,7 @@
     class="viz"
     viewBox="0 0 640 400"
     role="img"
-    aria-label="Forward payoff: the capped upside above the strike"
+    aria-label="Forward payoff: the downside it avoids and the upside it gives up"
   >
     <!-- axes -->
     <line class="axis" x1="70" y1="40" x2="70" y2="340" />
@@ -19,32 +21,48 @@
       market price at harvest →
     </text>
 
-    <!-- the persistent lines -->
-    <path class="market" d="M 90 320 L 590 60" />
+    <!-- the locked price persists the whole way through -->
     <path class="payoff" d="M 90 180 L 590 180" />
+    <text class="tick-label" x="586" y="172" text-anchor="end">locked price</text>
+    <line class="guide" x1="360" y1="340" x2="360" y2="186" />
+    <text class="tick-label" x="360" y="356" text-anchor="middle">strike</text>
 
-    <!-- click 1: the upside above the lock that he forfeits -->
-    <g class="fragment" data-fragment-index="0">
-      <polygon class="cage-fill" points="360,180 590,180 590,60" />
+    <!-- click 1: the downside avoided. Market starts at the lock (the strike)
+         and falls below it as the price drops; the gap above is his protection.
+         Fades out on the next click. -->
+    <g class="fragment fade-in-then-out" data-fragment-index="0">
+      <path class="market" d="M 90 320 L 360 180" />
+      <polygon class="cage-fill good" points="90,180 360,180 90,320" />
+      <text class="note good" x="100" y="206">the downside he avoided</text>
+    </g>
+
+    <!-- click 2: the upside given up. Market climbs above the lock as the price
+         soars; that gap goes to the buyer, not him. -->
+    <g class="fragment fade-in-then-out" data-fragment-index="1">
+      <path class="market" d="M 360 180 L 590 60" />
+      <polygon class="cage-fill bad" points="360,180 590,180 590,60" />
       <text class="note bad" x="582" y="120" text-anchor="end">
         the upside he gives up
       </text>
     </g>
   </svg>
 
-  <p class="thesis reveal-in fragment" data-fragment-index="1">
+  <!-- click 3: both faces gone, just the flat line — the punch -->
+  <p class="thesis reveal-in fragment" data-fragment-index="2">
     A hedge isn't a bet you win or lose — it's a bet you've
     <span class="accent">chosen to stop playing</span>.
   </p>
-  <p class="reveal-in fragment muted" data-fragment-index="2">
+  <!-- click 4: the new flaw that launches the future -->
+  <p class="reveal-in fragment muted" data-fragment-index="3">
     And it only works if he trusts the other side to show up.
   </p>
 
   <aside class="notes">
-    The flat line that felt like safety is also a ceiling: above the strike, all
-    that shaded upside goes to the buyer, not him. That's not a flaw — it's the
-    deal he chose. The real new problem is the last line: a forward is a private
-    handshake. You need someone you trust, and you're frozen into the deal. That
-    launches the future.
+    The flat line cuts both ways. Below the strike it protected him from a
+    falling price — the downside he avoided. Above it, all that upside goes to
+    the buyer — the price he pays for certainty. Fade both away and you're left
+    with the flat line: he didn't win or lose, he chose to stop playing. The real
+    new problem is the last line — a forward is a private handshake; you need
+    someone you trust, and you're frozen in. That launches the future.
   </aside>
 </section>
