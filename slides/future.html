@@ -1,0 +1,53 @@
+<!-- Future (step 15): the same deal, standardized, with a clearinghouse referee
+     so strangers can trade without trusting each other. The economics are
+     identical — only the plumbing changed. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>The future: the same deal, between strangers.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 300"
+    role="img"
+    aria-label="Two strangers trading through a clearinghouse referee"
+  >
+    <!-- the two parties -->
+    <circle class="person" cx="140" cy="110" r="20" />
+    <path class="person" d="M110,185 C110,140 170,140 170,185" />
+    <text class="glyph-label" x="140" y="215">the farmer</text>
+
+    <circle class="person" cx="500" cy="110" r="20" />
+    <path class="person" d="M470,185 C470,140 530,140 530,185" />
+    <text class="glyph-label" x="500" y="215">a stranger</text>
+
+    <!-- start: a private handshake. Fades out on the first click. -->
+    <g class="fragment fade-out" data-fragment-index="0">
+      <line class="link" x1="172" y1="150" x2="468" y2="150" />
+      <text class="glyph-label muted" x="320" y="138">a private handshake</text>
+    </g>
+
+    <!-- click 1: a clearinghouse referee slides between them -->
+    <g class="fragment" data-fragment-index="0">
+      <line class="link" x1="172" y1="150" x2="272" y2="150" />
+      <line class="link" x1="468" y1="150" x2="368" y2="150" />
+      <rect class="box" x="272" y="128" width="96" height="44" rx="6" />
+      <text class="glyph-label" x="320" y="155">clearinghouse</text>
+    </g>
+  </svg>
+
+  <p class="reveal-in fragment" data-fragment-index="1">
+    A referee in the middle means they need not trust each other — only the
+    referee. <span class="muted">Same payoff. New plumbing.</span>
+  </p>
+  <p class="reveal-in fragment muted" data-fragment-index="2">
+    But it's still a cage: lock the price, and a soaring market passes him by.
+  </p>
+
+  <aside class="notes">
+    A future is a forward, standardized and traded on an exchange. The
+    clearinghouse stands between two strangers and guarantees the trade, so they
+    don't have to know or trust each other. Stress that the payoff line is
+    identical to the forward — only the plumbing changed. The remaining ache is
+    the same cage, which the option finally opens.
+  </aside>
+</section>

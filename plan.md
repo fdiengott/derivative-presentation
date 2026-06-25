@@ -86,39 +86,43 @@ horizontal = market price at harvest, vertical = what the farmer walks away with
 
 ### Phase 1 — Theme & mechanics
 
-- [ ] **5.** `theme.css`: minimal light theme — background, accent color,
-      typography, generous spacing; override the reveal base theme.
-- [ ] **6.** `js/visuals.js`: add `fragmentshown` / `slidechanged` listeners that
-      toggle CSS classes on the active slide's SVG.
-- [ ] **7.** Build the reusable SVG payoff-chart base (axes + label), taught once
-      and reused by forward / future / option.
+- [x] **5.** Minimal light theme — split into `css/base.css` (palette,
+      typography, layout, chrome, tunable timing vars, `reveal-in`) and
+      `css/viz.css` (SVG visual system + animation primitives).
+- [x] **6.** Animation mechanics: CSS-via-fragment (`.fragment.visible`) for the
+      common case + JS `data-anim` hooks in `js/anim.js` for cross-element
+      sequencing. Draw-on uses `pathLength="1"` (no JS measurement).
+- [x] **7.** Reusable SVG payoff-chart base (axes taught once, drawable payoff
+      line) in `slides/payoff-base.html`.
 
 ### Phase 2 — Movement 1: The Ache
 
-- [ ] **8.** Slide 1 — Title.
-- [ ] **9.** Slide 2 — Farmer walks out to a lush crop → despair. Abundance +
-      dread in one frame; fragment reveals _why_ (everyone's great harvest → low
-      price → can't recoup costs).
-- [ ] **10.** Slide 3 — History beat (fragments): Osaka rice futures, 1700s;
-      Mesopotamian clay tablets.
-- [ ] **11.** Slide 4 — Core thesis: "A derivative moves risk from someone who
-      fears it to someone willing to bear it."
+- [x] **8.** Slide 1 — Title (`slides/title.html`): "Moving risk" + the five
+      instruments revealed.
+- [x] **9.** Slide 2 — The ache (`slides/ache.html`): wheat-field abundance +
+      "feels despair"; fragment reveals _why_ (great crop everywhere → low price →
+      can't recoup costs).
+- [x] **10.** Slide 3 — History beat (`slides/history.html`, fragments): Osaka
+      rice futures 1700s; Mesopotamian clay tablets.
+- [x] **11.** Slide 4 — Core thesis (`slides/thesis.html`): "A derivative is a
+      tool for moving risk — from someone who fears it to someone willing to bear
+      it."
 
 ### Phase 3 — Movement 2: The Farmer's Staircase
 
-- [ ] **12.** Slide 5 — Forward: handshake locks a price; teach the axes once;
-      flat line = certainty.
-- [ ] **13.** Slides 6–9 — Forward multi-world reveals (crash / soar / near-lock =
-      peace of mind) as fragments on the same chart.
-- [ ] **14.** Slide 9 — The cage: "a hedge isn't a bet you win or lose — it's a
-      bet you've chosen to stop playing." New flaw: needs a trusted counterparty /
-      frozen in.
-- [ ] **15.** Slide 10 — Future: same payoff line reused; clearinghouse referee
-      between strangers. New flaw: still a cage.
-- [ ] **16.** Slide 11 — Option: the line bends (animated); premium nudges line
-      down; floor below strike, upside above.
-- [ ] **17.** Slide 12 — Option multi-world: wins in both good and bad years minus
-      premium. Option = insurance. Farmer's happy ending.
+- [x] **12.** Forward (`slides/forward.html`): handshake locks a price; axes
+      taught once; flat line draws = certainty.
+- [x] **13.** Forward worlds (`slides/forward-worlds.html`): one persistent chart;
+      fragments step through crash / soar / near-lock against the unhedged
+      diagonal.
+- [x] **14.** The cage (`slides/forward-cage.html`): shaded foregone upside; "a
+      bet you've chosen to stop playing"; new flaw = needs a trusted counterparty.
+- [x] **15.** Future (`slides/future.html`): handshake → clearinghouse referee
+      between strangers (same payoff, new plumbing); new flaw = still a cage.
+- [x] **16.** Option (`slides/option.html`): the line bends into a hockey stick
+      over the forward's ghost line; premium gap; floor below strike, upside above.
+- [x] **17.** Option worlds (`slides/option-worlds.html`): wins in crash and soar
+      minus premium; "an option is insurance" — the farmer's happy ending.
 
 ### Phase 4 — The Bridge
 

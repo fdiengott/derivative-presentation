@@ -42,11 +42,89 @@
   stroke-width: 3;
 }
 
-/* A reference market line (e.g. where the spot price actually landed). */
+/* A reference market line — what the farmer gets if he does NOT hedge
+ * (payoff = the market price). The diagonal the option later traces. */
 .viz .market {
   stroke: var(--line);
   stroke-width: 2;
   stroke-dasharray: 4 5;
+}
+
+/* Multi-world reveals: a vertical guide at one market outcome, a dot on each
+ * line, and a coloured gap showing what the instrument was worth that year. */
+.viz .guide {
+  stroke: var(--line);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 4;
+  fill: none;
+}
+.viz .dot {
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.viz .dot.lock {
+  fill: var(--accent);
+}
+.viz .dot.market {
+  fill: var(--muted);
+}
+.viz .gap {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.viz .gap.good {
+  stroke: var(--good);
+}
+.viz .gap.bad {
+  stroke: var(--bad);
+}
+.viz .gap.soft {
+  stroke: var(--muted);
+}
+
+/* A faded payoff line used as a reference (e.g. the forward's cage under the
+ * option's bend). */
+.viz .payoff.ghost {
+  stroke: var(--line);
+}
+
+/* Shaded region: the upside a forward gives up above the strike (the cage). */
+.viz .cage-fill {
+  fill: var(--bad);
+  opacity: 0.12;
+  stroke: none;
+}
+
+/* Trade-staging (future slide): two strangers + a clearinghouse referee. */
+.viz .person {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.viz .link {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+.viz .box {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+.viz .glyph-label {
+  fill: var(--ink);
+  font-size: 16px;
+  font-family: inherit;
+  text-anchor: middle;
+}
+.viz .glyph-label.muted {
+  fill: var(--muted);
 }
 
 /* Annotation callouts inside a chart. */
@@ -60,6 +138,19 @@
 }
 .viz .note.bad {
   fill: var(--bad);
+}
+.viz .note.muted {
+  fill: var(--muted);
+}
+
+/* A field of wheat — abundance. Line-art ears in the grain tone. */
+.viz .stalk {
+  fill: none;
+  stroke: var(--grain);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
 /* ---- Animation primitives ----

@@ -1,21 +1,20 @@
-<!-- The reusable payoff-chart base. Axes are static ("taught once"); the payoff
-     line and caption are fragments that animate on click. Reused later by the
-     forward / future / option slides. -->
-<section data-viz="payoff-base">
-  <p class="kicker">The farmer's chart</p>
+<!-- Forward (Slide 5): lock a price with a handshake. Teach the axes once here.
+     Flat line = certainty. Reused by future + option. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>The forward: lock the price with a handshake.</h2>
+
   <svg
     class="viz"
     viewBox="0 0 640 400"
     role="img"
-    aria-label="Payoff chart: what the farmer walks away with versus the market price at harvest"
+    aria-label="Payoff chart with a flat line: a locked-in price"
   >
-    <!-- axes (taught once, then reused on future/option) -->
+    <!-- axes (taught once) -->
     <line class="axis" x1="70" y1="40" x2="70" y2="340" />
     <line class="axis" x1="70" y1="340" x2="610" y2="340" />
-    <!-- arrowhead-ish tips -->
     <polyline class="axis" points="64,52 70,40 76,52" />
     <polyline class="axis" points="598,334 610,340 598,346" />
-
     <text class="axis-label" x="340" y="386" text-anchor="middle">
       market price at harvest →
     </text>
@@ -29,12 +28,12 @@
       ↑ what the farmer walks away with
     </text>
 
-    <!-- the payoff line — flat = certainty. Draws on the first click. -->
+    <!-- the locked price: flat across every market outcome. Draws on click. -->
     <path
       class="payoff drawable fragment"
       data-fragment-index="0"
       pathLength="1"
-      d="M 95 195 L 585 195"
+      d="M 90 180 L 590 180"
     />
   </svg>
 
@@ -43,8 +42,9 @@
   </p>
 
   <aside class="notes">
-    Phase 1 verification slide. Axes are taught once here and reused by the
-    future and option charts. Click 1 draws the flat payoff line; click 2 rises
-    in the caption.
+    He agrees a price today for grain delivered after harvest. Whatever the
+    market does, he walks away with the same number — so the line is flat across
+    every possible market price. Teach the axes here: across is the market price
+    at harvest, up is what he actually pockets.
   </aside>
 </section>

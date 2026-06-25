@@ -1,0 +1,75 @@
+<!-- Forward, the multi-world reveal (Slides 6-9). Same chart; each click steps
+     into a different possible harvest. The flat lock line persists while the
+     world around it changes. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>The same handshake, lived across many worlds.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="Forward payoff across different market outcomes"
+  >
+    <!-- axes -->
+    <line class="axis" x1="70" y1="40" x2="70" y2="340" />
+    <line class="axis" x1="70" y1="340" x2="610" y2="340" />
+    <polyline class="axis" points="64,52 70,40 76,52" />
+    <polyline class="axis" points="598,334 610,340 598,346" />
+    <text class="axis-label" x="340" y="386" text-anchor="middle">
+      market price at harvest →
+    </text>
+
+    <!-- the locked price persists from the previous slide -->
+    <path class="payoff" d="M 90 180 L 590 180" />
+    <text class="tick-label" x="586" y="172" text-anchor="end">locked price</text>
+
+    <!-- click 1: what he'd get unhedged — sell at the market price -->
+    <g class="fragment" data-fragment-index="0">
+      <path class="market" d="M 90 320 L 590 60" />
+      <text class="tick-label" x="582" y="52" text-anchor="end">
+        if he hadn't locked
+      </text>
+    </g>
+
+    <!-- click 2: a world where the price crashed → the forward saved him -->
+    <g class="fragment" data-fragment-index="1">
+      <line class="guide" x1="180" y1="340" x2="180" y2="170" />
+      <line class="gap good" x1="180" y1="180" x2="180" y2="273" />
+      <circle class="dot market" cx="180" cy="273" r="6" />
+      <circle class="dot lock" cx="180" cy="180" r="6" />
+      <text class="note good" x="196" y="150">the forward saved him</text>
+    </g>
+
+    <!-- click 3: a world where the price soared → the forward cost him -->
+    <g class="fragment" data-fragment-index="2">
+      <line class="guide" x1="540" y1="340" x2="540" y2="76" />
+      <line class="gap bad" x1="540" y1="86" x2="540" y2="180" />
+      <circle class="dot market" cx="540" cy="86" r="6" />
+      <circle class="dot lock" cx="540" cy="180" r="6" />
+      <text class="note bad" x="524" y="70" text-anchor="end">
+        the forward cost him
+      </text>
+    </g>
+
+    <!-- click 4: a world where it landed near the lock → peace of mind -->
+    <g class="fragment" data-fragment-index="3">
+      <line class="guide" x1="360" y1="340" x2="360" y2="170" />
+      <circle class="dot lock" cx="360" cy="180" r="6" />
+      <text class="note muted" x="360" y="158" text-anchor="middle">
+        just peace of mind
+      </text>
+    </g>
+  </svg>
+
+  <p class="thesis reveal-in fragment muted" data-fragment-index="4">
+    Whatever the world does, his number doesn't move.
+  </p>
+
+  <aside class="notes">
+    Step through the worlds one at a time. The dashed diagonal is what he'd have
+    gotten by selling at the market; the flat line is what the forward gives him.
+    Crash → saved. Soar → cost him. Near the lock → just peace of mind. The point
+    isn't winning or losing — it's that his number stopped moving.
+  </aside>
+</section>

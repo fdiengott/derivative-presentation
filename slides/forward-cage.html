@@ -1,0 +1,50 @@
+<!-- The cage (step 14): the forward caps the upside, by design. This ache
+     launches the future, then the option. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>He can never win big. By design.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="Forward payoff: the capped upside above the strike"
+  >
+    <!-- axes -->
+    <line class="axis" x1="70" y1="40" x2="70" y2="340" />
+    <line class="axis" x1="70" y1="340" x2="610" y2="340" />
+    <polyline class="axis" points="64,52 70,40 76,52" />
+    <polyline class="axis" points="598,334 610,340 598,346" />
+    <text class="axis-label" x="340" y="386" text-anchor="middle">
+      market price at harvest →
+    </text>
+
+    <!-- the persistent lines -->
+    <path class="market" d="M 90 320 L 590 60" />
+    <path class="payoff" d="M 90 180 L 590 180" />
+
+    <!-- click 1: the upside above the lock that he forfeits -->
+    <g class="fragment" data-fragment-index="0">
+      <polygon class="cage-fill" points="360,180 590,180 590,60" />
+      <text class="note bad" x="582" y="120" text-anchor="end">
+        the upside he gives up
+      </text>
+    </g>
+  </svg>
+
+  <p class="thesis reveal-in fragment" data-fragment-index="1">
+    A hedge isn't a bet you win or lose — it's a bet you've
+    <span class="accent">chosen to stop playing</span>.
+  </p>
+  <p class="reveal-in fragment muted" data-fragment-index="2">
+    And it only works if he trusts the other side to show up.
+  </p>
+
+  <aside class="notes">
+    The flat line that felt like safety is also a ceiling: above the strike, all
+    that shaded upside goes to the buyer, not him. That's not a flaw — it's the
+    deal he chose. The real new problem is the last line: a forward is a private
+    handshake. You need someone you trust, and you're frozen into the deal. That
+    launches the future.
+  </aside>
+</section>

@@ -1,0 +1,59 @@
+<!-- Option (step 16): the line finally bends. Flat below the strike (the floor
+     holds), lifts off above it (keeps the upside). The premium = the whole line
+     sitting a little lower. Animate the bend appearing over the forward's flat
+     line — the cage opening. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>The option: the right, not the obligation.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="Option payoff: a hockey stick that protects the downside and keeps the upside"
+  >
+    <!-- axes -->
+    <line class="axis" x1="70" y1="40" x2="70" y2="340" />
+    <line class="axis" x1="70" y1="340" x2="610" y2="340" />
+    <polyline class="axis" points="64,52 70,40 76,52" />
+    <polyline class="axis" points="598,334 610,340 598,346" />
+    <text class="axis-label" x="340" y="386" text-anchor="middle">
+      market price at harvest →
+    </text>
+
+    <!-- the forward's flat line, faded — the cage we're about to open -->
+    <path class="payoff ghost" d="M 90 180 L 590 180" />
+    <text class="tick-label" x="586" y="172" text-anchor="end">the forward</text>
+
+    <!-- strike marker -->
+    <line class="guide" x1="360" y1="340" x2="360" y2="190" />
+    <text class="tick-label" x="360" y="356" text-anchor="middle">strike</text>
+
+    <!-- click 1: the bent option line draws on, plus the premium gap -->
+    <path
+      class="payoff drawable fragment"
+      data-fragment-index="0"
+      pathLength="1"
+      d="M 90 198 L 360 198 L 590 78"
+    />
+    <g class="fragment" data-fragment-index="0">
+      <line class="gap soft" x1="116" y1="180" x2="116" y2="198" />
+      <text class="note muted" x="126" y="196">premium</text>
+    </g>
+  </svg>
+
+  <p class="reveal-in fragment" data-fragment-index="1">
+    Below the strike a <span class="accent">floor</span> protects him; above it,
+    he keeps the upside.
+  </p>
+  <p class="reveal-in fragment muted" data-fragment-index="2">
+    The premium is the cost of that freedom — the whole line sits a little lower.
+  </p>
+
+  <aside class="notes">
+    He pays a premium for the right, not the obligation, to sell at the strike.
+    Below the strike the floor holds, just like the forward; above it the line
+    lifts off and follows the market up. The cage has opened. The only price is
+    the premium — the whole line sits slightly lower than the forward's.
+  </aside>
+</section>
