@@ -1,0 +1,116 @@
+<!-- Swap, beat 2 (step 20): the plumbing. The tidy two-party picture is a
+     simplification — a dealer sits in the middle, matching the two sides and
+     keeping a small sliver; behind the whole trade stands the clearinghouse, the
+     same referee from the futures slide, guaranteeing it. The two marching lanes
+     persist from beat 1; the dealer occludes the middle so each stream becomes
+     two segments meeting at it. Bars use a 200px period to stay seamless. -->
+<section>
+  <p class="kicker">Movement 3 · Streams of risk</p>
+  <h2>Who stands in the middle?</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 320"
+    role="img"
+    aria-label="The baker and bank's swap streams routed through a dealer in the middle, with a clearinghouse standing behind the trade"
+  >
+    <defs>
+      <clipPath id="dealer-lane-top"><rect x="140" y="92" width="360" height="80" /></clipPath>
+      <clipPath id="dealer-lane-bot"><rect x="140" y="182" width="360" height="80" /></clipPath>
+
+      <!-- even (fixed) bars, baseline y=160, one 200px period (5 bars) -->
+      <g id="deal-fixed">
+        <line x1="120" y1="160" x2="120" y2="130" />
+        <line x1="160" y1="160" x2="160" y2="130" />
+        <line x1="200" y1="160" x2="200" y2="130" />
+        <line x1="240" y1="160" x2="240" y2="130" />
+        <line x1="280" y1="160" x2="280" y2="130" />
+      </g>
+      <!-- jagged (floating) bars, baseline y=235, one 200px period (5 bars) -->
+      <g id="deal-float">
+        <line x1="120" y1="235" x2="120" y2="209" />
+        <line x1="160" y1="235" x2="160" y2="189" />
+        <line x1="200" y1="235" x2="200" y2="217" />
+        <line x1="240" y1="235" x2="240" y2="195" />
+        <line x1="280" y1="235" x2="280" y2="205" />
+      </g>
+    </defs>
+
+    <!-- the three figures -->
+    <circle class="person" cx="68" cy="140" r="15" />
+    <path class="person" d="M48,186 C48,155 88,155 88,186" />
+    <text class="glyph-label" x="68" y="206">the baker</text>
+
+    <polyline class="person" points="524,150 572,126 620,150" />
+    <line class="person" x1="530" y1="150" x2="614" y2="150" />
+    <line class="person" x1="540" y1="150" x2="540" y2="178" />
+    <line class="person" x1="572" y1="150" x2="572" y2="178" />
+    <line class="person" x1="604" y1="150" x2="604" y2="178" />
+    <line class="person" x1="528" y1="178" x2="616" y2="178" />
+    <text class="glyph-label" x="572" y="200">the bank</text>
+
+    <!-- the two streams, persistent and marching the whole time -->
+    <g clip-path="url(#dealer-lane-top)">
+      <g class="stream-anim rightward calm">
+        <use href="#deal-fixed" x="0" />
+        <use href="#deal-fixed" x="200" />
+        <use href="#deal-fixed" x="400" />
+        <use href="#deal-fixed" x="600" />
+      </g>
+    </g>
+    <polyline class="flow calm" points="510,153 522,160 510,167" />
+
+    <g clip-path="url(#dealer-lane-bot)">
+      <g class="stream-anim leftward">
+        <use href="#deal-float" x="0" />
+        <use href="#deal-float" x="200" />
+        <use href="#deal-float" x="400" />
+        <use href="#deal-float" x="600" />
+      </g>
+    </g>
+    <polyline class="flow" points="130,228 118,235 130,242" />
+
+    <!-- beat B: the dealer slides into the middle, occluding the streams so each
+         becomes two segments meeting at it, and keeps a small sliver -->
+    <g class="fragment" data-fragment-index="0">
+      <rect class="box" style="fill: var(--bg)" x="290" y="120" width="60" height="124" rx="8" />
+      <text class="glyph-label" x="320" y="186">dealer</text>
+      <circle cx="320" cy="268" r="8" style="fill: var(--grain)" />
+      <text class="note muted" x="336" y="273">keeps a sliver</text>
+    </g>
+
+    <!-- beat C: the clearinghouse stands behind the whole trade -->
+    <g class="fragment" data-fragment-index="1">
+      <rect
+        x="118"
+        y="104"
+        width="404"
+        height="150"
+        rx="14"
+        fill="none"
+        style="stroke: var(--muted); stroke-width: 2; stroke-dasharray: 7 5"
+      />
+      <text class="glyph-label muted" x="320" y="98">clearinghouse</text>
+    </g>
+  </svg>
+
+  <div class="caption-stack">
+    <p class="fragment fade-out" data-fragment-index="0">We drew the swap as a clean deal between two parties.</p>
+    <p class="fragment fade-in-then-out" data-fragment-index="0">
+      In reality a <span class="accent">dealer</span> sits in the middle — matching them, for a small sliver.
+    </p>
+    <p class="fragment" data-fragment-index="1">
+      And behind the trade stands a <span class="accent">clearinghouse</span> — the referee from futures — guaranteeing
+      it.
+    </p>
+  </div>
+
+  <aside class="notes">
+    The two-party picture was a simplification. The baker rarely meets her perfect counterparty directly; a dealer — a
+    bank's markets desk — sits in the middle, matching the two sides and keeping a small sliver (the spread) for the
+    service. Watch the streams: each one now runs to the dealer and out the other side, two segments meeting in the
+    middle. And behind the whole trade stands the clearinghouse — the same grown-up referee from the futures slide — the
+    central counterparty that guarantees performance so nobody has to trust anybody personally. Dealer matches;
+    clearinghouse guarantees. Only split them apart further if someone asks.
+  </aside>
+</section>

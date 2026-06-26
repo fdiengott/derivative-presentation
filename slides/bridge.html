@@ -1,0 +1,117 @@
+<!-- The Bridge (step 18): the load-bearing pivot. The farmer's whole world was
+     one transaction, one harvest — a single moment. But some risk recurs: every
+     month, a payment. The farmer can't show that, so we hand off to a new
+     protagonist (the baker) and the visual language shifts from charts to flows.
+     The shift is felt, not announced: a single arrow becomes a stream. -->
+<section>
+  <p class="kicker">From a moment to a stream</p>
+  <h2>Some risk doesn't arrive just once.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 300"
+    role="img"
+    aria-label="A single payment over time giving way to a recurring monthly stream of payments from the baker"
+  >
+    <defs>
+      <clipPath id="bridge-lane"><rect x="200" y="108" width="360" height="96" /></clipPath>
+      <!-- a gentle stream of monthly payments, one 200px period (5 bars) -->
+      <g id="bridge-bars">
+        <line x1="140" y1="185" x2="140" y2="140" />
+        <line x1="180" y1="185" x2="180" y2="140" />
+        <line x1="220" y1="185" x2="220" y2="140" />
+        <line x1="260" y1="185" x2="260" y2="140" />
+        <line x1="300" y1="185" x2="300" y2="140" />
+      </g>
+    </defs>
+
+    <!-- the timeline: axes retire, a bare arrow of time remains -->
+    <line class="axis" x1="80" y1="190" x2="600" y2="190" />
+    <polyline class="axis" points="592,184 600,190 592,196" />
+    <text class="tick-label" x="600" y="212" text-anchor="end">time →</text>
+
+    <!-- beat 0 (visible at start): the farmer's single moment — one payment -->
+    <g class="fragment fade-in-then-out" data-fragment-index="0">
+      <line class="flow" x1="340" y1="138" x2="340" y2="182" />
+      <polyline class="flow" points="332,170 340,186 348,170" />
+      <text class="glyph-label" x="340" y="126">one harvest</text>
+    </g>
+
+    <!-- beat 1: the same risk, but again and again — a monthly stream. On the
+         final beat these static arrows cross-fade out (see .monthly) and the
+         live marching stream below takes their place. -->
+    <g class="fragment monthly" data-fragment-index="1">
+      <g class="flow">
+        <line x1="200" y1="138" x2="200" y2="182" />
+        <polyline points="192,170 200,186 208,170" />
+      </g>
+      <g class="flow">
+        <line x1="260" y1="138" x2="260" y2="182" />
+        <polyline points="252,170 260,186 268,170" />
+      </g>
+      <g class="flow">
+        <line x1="320" y1="138" x2="320" y2="182" />
+        <polyline points="312,170 320,186 328,170" />
+      </g>
+      <g class="flow">
+        <line x1="380" y1="138" x2="380" y2="182" />
+        <polyline points="372,170 380,186 388,170" />
+      </g>
+      <g class="flow">
+        <line x1="440" y1="138" x2="440" y2="182" />
+        <polyline points="432,170 440,186 448,170" />
+      </g>
+      <g class="flow">
+        <line x1="500" y1="138" x2="500" y2="182" />
+        <polyline points="492,170 500,186 508,170" />
+      </g>
+      <g class="flow">
+        <line x1="560" y1="138" x2="560" y2="182" />
+        <polyline points="552,170 560,186 568,170" />
+      </g>
+      <text class="glyph-label" x="380" y="126">every month</text>
+    </g>
+
+    <!-- the live marching stream (hidden until the final beat) — the same
+         animation the swap slides use, introduced here on the word "stream" -->
+    <g class="month-stream">
+      <g clip-path="url(#bridge-lane)">
+        <g class="stream-anim rightward">
+          <use href="#bridge-bars" x="0" />
+          <use href="#bridge-bars" x="200" />
+          <use href="#bridge-bars" x="400" />
+          <use href="#bridge-bars" x="600" />
+        </g>
+      </g>
+      <text class="glyph-label" x="380" y="126">every month</text>
+    </g>
+
+    <!-- beat 2: a new protagonist at the source of the stream -->
+    <g class="fragment" data-fragment-index="2">
+      <circle class="person" cx="110" cy="138" r="16" />
+      <path class="person" d="M86,186 C86,150 134,150 134,186" />
+      <text class="glyph-label" x="110" y="214">the baker</text>
+    </g>
+  </svg>
+
+  <div class="caption-stack">
+    <p class="fragment fade-in-then-out" data-fragment-index="0">
+      The farmer's whole world was one harvest — a single moment.
+    </p>
+    <p class="fragment fade-in-then-out" data-fragment-index="1">But some risk returns — every month, every payment.</p>
+    <p class="fragment fade-in-then-out" data-fragment-index="2">
+      Meet the baker: a loan payment, due every single month.
+    </p>
+    <p class="fragment" data-fragment-index="3" data-anim="streaming">
+      Her risk isn't a price to bet on — it's a <span class="accent">stream</span> to manage.
+    </p>
+  </div>
+
+  <aside class="notes">
+    This is the pivot. Recap the farmer: his whole world was one transaction, one harvest — a single moment, which is
+    why a chart with one outcome could hold it. But some risk doesn't arrive once; it returns every month, every
+    payment. The farmer can't show that, so we hand off to a new protagonist — the baker, who owes a loan payment every
+    month. Notice the picture changed on its own: the charts are gone, and we're following a flow of arrows instead.
+    We've left "betting on a price" for "trading a stream." Don't announce it — let it land.
+  </aside>
+</section>

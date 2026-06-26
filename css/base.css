@@ -4,8 +4,8 @@
 :root {
   /* --bg: #fbfaf7;  */
   /* --ink: #1c1b19;  */
-  --bg: #222; /* off-white */
-  --ink: #ddd; /* near-black text */
+  --bg: #222;
+  --ink: #ddd;
 
   --muted: #6b6862; /* secondary text */
   --accent: #c8553d; /* warm accent for the "active" line/arrow */
@@ -20,7 +20,7 @@
   /* ---- Animation timings (tune these) ---- */
   --t-draw: 0.9s; /* a chart/flow line drawing itself on */
   --t-fade: 0.5s; /* annotations & captions fading/rising in */
-  --t-flow: 2.6s; /* one loop of the swap/CDS arrow-flow animation */
+  --t-flow: 12s; /* one loop of the swap/CDS arrow-flow animation */
   --t-liftoff: 1.4s; /* the option's outcome line peeling off the flat — the focal beat */
 }
 
@@ -95,6 +95,23 @@
 }
 .reveal .controls {
   color: var(--accent-soft);
+}
+
+/* A fixed area for swapping single-line captions (bridge/swap/CDS): each caption
+ * is absolutely positioned so fade-in-then-out fragments overlap in place
+ * instead of stacking and shifting the layout. */
+.reveal .caption-stack {
+  position: relative;
+  min-height: 2.8em;
+  margin-top: 0.6em;
+}
+.reveal .caption-stack > p {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: 0.82em;
+  line-height: 1.35;
 }
 
 /* ---- Generic fade/rise-in, usable on any element (HTML or SVG) ----

@@ -106,6 +106,77 @@
   stroke: var(--muted);
 }
 
+/* ---- Flow grammar (bridge, swap, CDS): payments as arrows over a timeline.
+ * Axes retire here; motion and direction carry the meaning. ---- */
+.viz .flow {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+.viz .flow.muted {
+  stroke: var(--muted);
+}
+.viz .flow.calm {
+  stroke: var(--good);
+}
+
+/* Payments as bars marching along a lane. Each amount is a bar's height, so a
+ * floating (variable) stream is jagged and a fixed stream is even. The bar-set
+ * is duplicated one period over and the group is translated by exactly one
+ * period, looping seamlessly — the motion is the message: a stream of payments.
+ *
+ * Bars are drawn via <use> clones; CSS class selectors don't cross the <use>
+ * shadow boundary, so stroke is set here on the wrapper (an inherited property)
+ * and flows into the cloned <line>s. (vector-effect doesn't inherit, so bar
+ * strokes scale with the chart — fine, and arguably correct for data bars.) */
+.viz .stream-anim {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+.viz .stream-anim.calm {
+  stroke: var(--good);
+}
+/* Bridge: on the final beat ("a stream to manage") the static monthly arrows
+ * give way to a live marching stream — introducing the swap's animation. The
+ * `.streaming` class is toggled on the svg via data-anim on the last caption. */
+.viz .monthly,
+.viz .month-stream {
+  transition: opacity var(--t-fade) var(--ease);
+}
+.viz .month-stream {
+  opacity: 0;
+}
+.viz.streaming .monthly {
+  opacity: 0;
+}
+.viz.streaming .month-stream {
+  opacity: 1;
+}
+
+.viz .stream-anim.rightward {
+  animation: stream-right var(--t-flow) linear infinite;
+}
+.viz .stream-anim.leftward {
+  animation: stream-left var(--t-flow) linear infinite;
+}
+@keyframes stream-right {
+  from {
+    transform: translateX(-200px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes stream-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-200px);
+  }
+}
+
 /* Trade-staging (future slide): two strangers + a clearinghouse referee. */
 .viz .person {
   fill: none;

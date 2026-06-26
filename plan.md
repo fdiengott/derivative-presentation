@@ -141,15 +141,17 @@ the same mechanism now. **No payoff diagram / hockey stick — Chart B is abando
 
 ### Phase 4 — The Bridge
 
-- [ ] **18.** Slide 13 — One transaction/harvest vs. a recurring _stream_ of risk.
-      Hand off to a new protagonist; visual language shifts to flows.
+- [x] **18.** Slide 13 — One transaction/harvest vs. a recurring _stream_ of risk
+      (`slides/bridge.html`). Hand off to the baker; visual language shifts from
+      charts to flows (a single arrow becomes a monthly stream).
 
 ### Phase 5 — Movement 3: Streams of Risk
 
-- [ ] **19.** Slide 14 — Swap beat 1: two parties, arrow streams; volatility moves
-      to the bank.
-- [ ] **20.** Slide 15 — Swap beat 2: dealer in the middle takes a sliver;
-      clearinghouse behind the trade. Risk _reshaping_, not shedding.
+- [x] **19.** Slide 14 — Swap beat 1 (`slides/swap.html`): two parties; marching
+      payment bars (height = amount), jagged floating → smooth fixed; the
+      volatility moves to the bank. Risk _reshaping_, not shedding.
+- [~] **20.** Slide 15 — Swap beat 2 (`slides/swap-dealer.html`): dealer in the
+      middle takes a sliver; clearinghouse behind the trade. _Pending review._
 - [ ] **21.** Slide 16 — CDS: premium stream → default event → big contingent
       payback. Capstone: insures the assumption every prior instrument made (that
       the counterparty pays). Rhymes with the option.
