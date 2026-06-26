@@ -137,6 +137,47 @@
 .viz .stream-anim.calm {
   stroke: var(--good);
 }
+.viz .stream-anim.soft {
+  stroke: var(--accent-soft);
+}
+
+/* CDS capstone: the one big contingent payback (many small premiums, then this).
+ * Drawn thick and drawn-on so it visibly shoots across to make her whole. */
+.viz .payback {
+  fill: none;
+  stroke: var(--good);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+/* The default event: the borrower collapses. Red, with a one-shot shake. */
+.viz .cds-collapse {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.viz .fragment.visible .cds-collapse {
+  animation: cds-shake 0.5s ease-in-out 1 both;
+}
+@keyframes cds-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
 /* Bridge: on the final beat ("a stream to manage") the static monthly arrows
  * give way to a live marching stream — introducing the swap's animation. The
  * `.streaming` class is toggled on the svg via data-anim on the last caption. */

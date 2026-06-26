@@ -1,0 +1,117 @@
+<!-- CDS (step 21): the capstone. A pension fund holds a company's bond and dreads
+     a default. So it buys protection: a small, steady premium stream to a
+     protection seller (rhymes with the option's premium). Then the company
+     defaults, and the seller makes the fund whole with one big contingent
+     payment. The point: every prior instrument assumed the counterparty pays —
+     the CDS is the first that insures that very assumption. -->
+<section>
+  <p class="kicker">Movement 3 · Streams of risk</p>
+  <h2>Insuring the thing everyone assumed.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 340"
+    role="img"
+    aria-label="A pension fund pays a steady premium stream to a protection seller; the company defaults; the seller sends one big payment back"
+  >
+    <defs>
+      <clipPath id="cds-lane"><rect x="130" y="224" width="380" height="36" /></clipPath>
+      <!-- small, even premium payments, one 200px period (5 bars) -->
+      <g id="cds-premium">
+        <line x1="130" y1="250" x2="130" y2="230" />
+        <line x1="170" y1="250" x2="170" y2="230" />
+        <line x1="210" y1="250" x2="210" y2="230" />
+        <line x1="250" y1="250" x2="250" y2="230" />
+        <line x1="290" y1="250" x2="290" y2="230" />
+      </g>
+    </defs>
+
+    <!-- the pension fund (left) is present throughout -->
+    <circle class="person" cx="72" cy="132" r="15" />
+    <path class="person" d="M52,178 C52,147 92,147 92,178" />
+    <text class="glyph-label" x="72" y="198">pension fund</text>
+
+    <!-- beat 0 (visible at start): it holds the company's bond -->
+    <g class="fragment fade-out" data-fragment-index="1">
+      <polyline class="person" points="286,34 320,14 354,34" />
+      <line class="person" x1="292" y1="34" x2="348" y2="34" />
+      <line class="person" x1="300" y1="34" x2="300" y2="78" />
+      <line class="person" x1="320" y1="34" x2="320" y2="78" />
+      <line class="person" x1="340" y1="34" x2="340" y2="78" />
+      <line class="person" x1="288" y1="78" x2="352" y2="78" />
+      <text class="glyph-label" x="320" y="98">the company</text>
+      <line class="link" x1="96" y1="150" x2="296" y2="82" />
+      <text class="note muted" x="178" y="112" text-anchor="middle">its bond</text>
+    </g>
+
+    <!-- beat 1 (click): the protection seller + a small steady premium stream -->
+    <g class="fragment" data-fragment-index="0">
+      <circle class="person" cx="568" cy="132" r="15" />
+      <path class="person" d="M548,178 C548,147 588,147 588,178" />
+      <text class="glyph-label" x="568" y="198">protection seller</text>
+
+      <g clip-path="url(#cds-lane)">
+        <g class="stream-anim rightward soft">
+          <use href="#cds-premium" x="0" />
+          <use href="#cds-premium" x="200" />
+          <use href="#cds-premium" x="400" />
+          <use href="#cds-premium" x="600" />
+        </g>
+      </g>
+      <polyline class="flow" points="512,243 524,250 512,257" />
+      <text class="note muted" x="320" y="284" text-anchor="middle">a small, steady premium</text>
+    </g>
+
+    <!-- beat 2 (click): the company defaults — it collapses, red, with a shake -->
+    <g class="fragment" data-fragment-index="1">
+      <g class="cds-collapse" style="stroke: var(--bad)">
+        <polyline points="286,34 320,14 354,34" />
+        <line x1="292" y1="34" x2="348" y2="34" />
+        <line x1="300" y1="34" x2="300" y2="78" />
+        <line x1="340" y1="34" x2="340" y2="78" />
+        <line x1="288" y1="78" x2="352" y2="78" />
+        <polyline points="320,14 309,40 329,54 316,78" />
+      </g>
+      <text class="note bad" x="320" y="104" text-anchor="middle">default!</text>
+    </g>
+
+    <!-- beat 3 (click): one big contingent payback shoots back to make her whole -->
+    <path class="payback drawable fragment" data-fragment-index="2" pathLength="1" d="M 540 155 L 132 155" />
+    <polygon class="fragment" data-fragment-index="2" points="110,155 134,142 134,168" style="fill: var(--good)" />
+    <text class="note good fragment" data-fragment-index="2" x="330" y="142" text-anchor="middle">
+      one big payment — made whole
+    </text>
+  </svg>
+
+  <div class="caption-stack">
+    <p class="fragment fade-out" data-fragment-index="0">
+      A pension fund holds a company's bond — and dreads the company defaulting.
+    </p>
+    <p class="fragment fade-in-then-out" data-fragment-index="0">
+      So it buys protection: a small, steady <span class="accent">premium</span> to a protection seller.
+    </p>
+    <p class="fragment fade-in-then-out" data-fragment-index="1">
+      Then the unthinkable — the company defaults.
+    </p>
+    <p class="fragment fade-in-then-out" data-fragment-index="2">
+      The seller makes it whole — one big payment for all those small ones.
+    </p>
+    <p class="fragment" data-fragment-index="3">
+      It's <span class="accent">insurance</span> — like the option. The one tool that insures what all the others
+      assumed: that the other side pays.
+    </p>
+  </div>
+
+  <aside class="notes">
+    The capstone. A pension fund lent to a company — it holds the company's bond,
+    and its nightmare is a default that makes the bond worthless. So it buys a
+    credit default swap: a small, steady premium paid to a protection seller —
+    deliberately the same shape as the option's premium-for-protection. Then the
+    company defaults; the bond collapses. And the seller pays one big contingent
+    amount that makes the fund whole — many small payments, then one large payback.
+    Name the rhyme: a CDS is insurance, just like the option. And it's the capstone
+    because every instrument before it quietly assumed the counterparty would pay
+    up — the CDS is the first one that insures that very assumption. It points risk
+    management at trust itself.
+  </aside>
+</section>

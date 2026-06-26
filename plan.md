@@ -150,11 +150,13 @@ the same mechanism now. **No payoff diagram / hockey stick — Chart B is abando
 - [x] **19.** Slide 14 — Swap beat 1 (`slides/swap.html`): two parties; marching
       payment bars (height = amount), jagged floating → smooth fixed; the
       volatility moves to the bank. Risk _reshaping_, not shedding.
-- [~] **20.** Slide 15 — Swap beat 2 (`slides/swap-dealer.html`): dealer in the
-      middle takes a sliver; clearinghouse behind the trade. _Pending review._
-- [ ] **21.** Slide 16 — CDS: premium stream → default event → big contingent
-      payback. Capstone: insures the assumption every prior instrument made (that
-      the counterparty pays). Rhymes with the option.
+- [x] **20.** Slide 15 — Swap beat 2 (`slides/swap-dealer.html`): dealer in the
+      middle takes a sliver; clearinghouse behind the trade.
+- [~] **21.** Slide 16 — CDS (`slides/cds.html`): small steady premium stream →
+      default event (the company collapses) → one big contingent payback that
+      makes the fund whole. Capstone: insures the assumption every prior
+      instrument made (that the counterparty pays). Rhymes with the option.
+      _Pending review._
 
 ### Phase 6 — Movement 4: Synthesis
 
