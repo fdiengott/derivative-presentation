@@ -123,20 +123,17 @@ the same mechanism now. **No payoff diagram / hockey stick — Chart B is abando
 
 - [x] **12.** Forward (`slides/forward.html`): handshake locks a price; temporal
       axes taught once (X=time, Y=price); flat locked line draws = certainty.
-- [~] **13.** Forward worlds (`slides/forward-worlds.html`): one persistent
+- [x] **13.** Forward worlds (`slides/forward-worlds.html`): one persistent
   temporal chart; fragments step through crash / soar / near-lock as a
   wandering dashed spot line ending below / above / near the flat locked line.
-  _Rework: rebuilt away from the abandoned payoff-diagram grammar._
-- [~] **14.** The cage (`slides/forward-cage.html`): crystallize the cage via the
+- [x] **14.** The cage (`slides/forward-cage.html`): crystallize the cage via the
   soar-world (flat locked line below the risen spot = upside foregone); "a bet
   you've chosen to stop playing"; new flaw = needs a trusted counterparty.
-  _Rework: cage shown through temporal worlds, not a shaded payoff region._
 - [x] **15.** Future (`slides/future.html`): handshake → clearinghouse referee
       between strangers (same temporal chart, new plumbing); new flaw = still a cage.
-- [~] **16.** Option (`slides/option.html`): same temporal chart; outcome line
+- [x] **16.** Option (`slides/option.html`): same temporal chart; outcome line
   sits below the flat at t=0 (premium), then in the up-world lifts off the flat
   at the strike-crossing and rides the spot upward (the focal animation beat).
-  _Rework: rebuilt away from the abandoned hockey-stick grammar._
 - [~] **17.** Option worlds (`slides/option-worlds.html`): up-world lift-off vs.
   down-world stay-flat (strike minus premium); wins in both the forward's good
   and bad years minus premium; "an option is insurance" — the happy ending.

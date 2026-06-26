@@ -1,4 +1,4 @@
-/* SVG visual system — payoff charts and flow diagrams.
+/* SVG visual system — temporal charts and flow diagrams.
  * Charts are inline <svg class="viz"> sharing one coordinate space.
  * Strokes use vector-effect so widths stay crisp regardless of scaling. */
 
@@ -12,10 +12,9 @@
 
 .viz .stroke,
 .viz .axis,
-.viz .payoff,
-.viz .market,
 .viz .locked,
 .viz .spot,
+.viz .strike,
 .viz .outcome,
 .viz .flow {
   fill: none;
@@ -56,36 +55,32 @@
   stroke-dasharray: 5 6;
 }
 
+/* The strike: a flat, soft reference line — the price the option lets him sell
+ * at. Subordinate to the outcome line so the lift-off reads as the action. */
+.viz .strike {
+  stroke: var(--accent-soft);
+  stroke-width: 2.5;
+}
+
 /* The option's outcome line: what the farmer actually walks away with. The
- * star of the option slides — it lifts off the flat at the strike-crossing. */
+ * star of the option slides (the deck's active accent) — it lifts off the flat
+ * at the strike-crossing. */
 .viz .outcome {
-  stroke: var(--good);
+  stroke: var(--accent);
   stroke-width: 3.5;
 }
 
-/* Legacy payoff line (Chart B) — retained only until the staircase rework is
- * complete; do not use in new slides. */
-.viz .payoff {
-  stroke: var(--accent);
-  stroke-width: 3;
+/* The floor continued: where a forward would have kept him. The outcome line
+ * peels up and away from this ghost at the strike-crossing. */
+.viz .outcome.ghost {
+  stroke: var(--line);
+  stroke-width: 2.5;
+  stroke-dasharray: 2 6;
+  opacity: 0.7;
 }
 
-/* A reference market line — what the farmer gets if he does NOT hedge
- * (payoff = the market price). The diagonal the option later traces. */
-.viz .market {
-  stroke: var(--line);
-  stroke-width: 2;
-  stroke-dasharray: 4 5;
-}
-
-/* Multi-world reveals: a vertical guide at one market outcome, a dot on each
- * line, and a coloured gap showing what the instrument was worth that year. */
-.viz .guide {
-  stroke: var(--line);
-  stroke-width: 1.5;
-  stroke-dasharray: 3 4;
-  fill: none;
-}
+/* Multi-world reveals: a dot on each line at harvest, and a coloured gap
+ * showing what the instrument was worth that season. */
 .viz .dot {
   stroke: var(--bg);
   stroke-width: 2;
@@ -109,25 +104,6 @@
 }
 .viz .gap.soft {
   stroke: var(--muted);
-}
-
-/* A faded payoff line used as a reference (e.g. the forward's cage under the
- * option's bend). */
-.viz .payoff.ghost {
-  stroke: var(--line);
-}
-
-/* Shaded regions on the cage: the downside the forward avoids (good) and the
- * upside it gives up (bad), on opposite sides of the strike. */
-.viz .cage-fill {
-  opacity: 0.14;
-  stroke: none;
-}
-.viz .cage-fill.good {
-  fill: var(--good);
-}
-.viz .cage-fill.bad {
-  fill: var(--bad);
 }
 
 /* Trade-staging (future slide): two strangers + a clearinghouse referee. */
@@ -203,6 +179,51 @@
  * Keep `all` (not just opacity) so `visibility` still flips with the fade. */
 .viz .fragment.fade-in-then-out {
   transition: all var(--t-fade) var(--ease);
+}
+
+/* The option's lift-off — the focal beat. Like .drawable but slower and eased,
+ * so the outcome line visibly peels off the flat and rides the spot upward.
+ * Same pathLength="1" trick: dashoffset 1 → 0 draws the line on from its start. */
+.viz .liftoff {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.viz .liftoff.fragment.visible {
+  transition: stroke-dashoffset var(--t-liftoff) var(--ease);
+  stroke-dashoffset: 0;
+}
+.viz .liftoff.fragment {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* The strike-crossing marker: a dot with a ring that pulses once as the outcome
+ * lifts off — drawing the eye to the exact moment the cage opens. */
+.viz .crossing-dot {
+  fill: var(--accent);
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.viz .crossing-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+}
+.viz .fragment.visible .crossing-ring {
+  animation: liftoff-pulse 1s var(--ease) 0.25s 1 both;
+}
+@keyframes liftoff-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 
 .viz .drawable {

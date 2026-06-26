@@ -1,49 +1,52 @@
-<!-- Option, the multi-world reveal (step 17): it wins in both the forward's good
-     and bad years, minus the premium. The rhyme: an option is insurance. The
-     farmer's happy ending. -->
+<!-- Option, the multi-world reveal (step 17): the same temporal chart across two
+     seasons, one at a time. Crash → the floor protects him, just like the forward
+     (only a premium lower). Soar → his outcome lifts off and rides the market up.
+     It wins both ways, minus the premium. The rhyme: an option is insurance. -->
 <section>
   <p class="kicker">Movement 2 · The staircase</p>
-  <h2>It wins in both worlds — minus the premium.</h2>
+  <h2>It wins in both seasons — minus the premium.</h2>
 
   <svg
     class="viz"
     viewBox="0 0 640 400"
     role="img"
-    aria-label="Option payoff across a crash and a soaring market"
+    aria-label="The option's outcome across a crashing season and a soaring season"
   >
-    <!-- axes -->
+    <!-- axes: across is time, up is price -->
     <line class="axis" x1="70" y1="40" x2="70" y2="340" />
     <line class="axis" x1="70" y1="340" x2="610" y2="340" />
     <polyline class="axis" points="64,52 70,40 76,52" />
     <polyline class="axis" points="598,334 610,340 598,346" />
-    <text class="axis-label" x="340" y="386" text-anchor="middle">
-      market price at harvest →
+    <text class="axis-label" x="22" y="190" text-anchor="middle" transform="rotate(-90 22 190)">
+      price ($)
     </text>
+    <text class="tick-label" x="90" y="364" text-anchor="middle">today</text>
+    <text class="tick-label" x="590" y="364" text-anchor="middle">harvest</text>
 
-    <!-- persistent lines: the option's bend + what he'd get unhedged -->
-    <path class="market" d="M 90 320 L 590 60" />
-    <path class="payoff" d="M 90 198 L 360 198 L 590 78" />
-    <line class="guide" x1="360" y1="340" x2="360" y2="190" />
-    <text class="tick-label" x="360" y="356" text-anchor="middle">strike</text>
+    <!-- the strike persists across both worlds -->
+    <path class="strike" d="M 90 200 L 590 200" />
+    <text class="tick-label" x="586" y="192" text-anchor="end">strike</text>
 
-    <!-- click 1: the crash — the floor still protects him -->
-    <g class="fragment" data-fragment-index="0">
-      <line class="guide" x1="180" y1="340" x2="180" y2="190" />
-      <line class="gap good" x1="180" y1="198" x2="180" y2="273" />
-      <circle class="dot market" cx="180" cy="273" r="6" />
-      <circle class="dot lock" cx="180" cy="198" r="6" />
-      <text class="note good" x="196" y="172">the floor still protects him</text>
+    <!-- world 1: the crash — the spot sinks below the floor; the floor holds -->
+    <g class="fragment fade-in-then-out" data-fragment-index="0">
+      <polyline class="spot" points="90,224 150,236 210,250 270,260 330,252 390,272 450,284 510,296 590,304" />
+      <path class="outcome" d="M 90 220 L 590 220" />
+      <line class="gap good" x1="590" y1="220" x2="590" y2="304" />
+      <circle class="dot lock" cx="590" cy="220" r="6" />
+      <circle class="dot market" cx="590" cy="304" r="6" />
+      <text class="note good" x="100" y="124">Prices crash — the floor protects him.</text>
     </g>
 
-    <!-- click 2: the soar — he rides up, giving back only the premium -->
-    <g class="fragment" data-fragment-index="1">
-      <line class="guide" x1="540" y1="340" x2="540" y2="96" />
-      <line class="gap soft" x1="540" y1="86" x2="540" y2="104" />
-      <circle class="dot market" cx="540" cy="86" r="6" />
-      <circle class="dot lock" cx="540" cy="104" r="6" />
-      <text class="note bad" x="524" y="70" text-anchor="end">
-        he rides the upside
-      </text>
+    <!-- world 2: the soar — the outcome lifts off and rides the spot up -->
+    <g class="fragment fade-in-then-out" data-fragment-index="1">
+      <polyline class="spot" points="90,232 150,224 210,238 270,214 330,200 390,176 450,150 510,116 590,84" />
+      <path class="outcome" d="M 90 220 L 330 220" />
+      <path class="outcome ghost" d="M 330 220 L 590 220" />
+      <path class="outcome" d="M 330 220 L 390 196 L 450 170 L 510 136 L 590 104" />
+      <line class="gap soft" x1="590" y1="84" x2="590" y2="104" />
+      <circle class="dot market" cx="590" cy="84" r="6" />
+      <circle class="dot lock" cx="590" cy="104" r="6" />
+      <text class="note good" x="100" y="312">Prices soar — he rides the upside, less the premium.</text>
     </g>
   </svg>
 
@@ -55,10 +58,12 @@
   </p>
 
   <aside class="notes">
-    Same two worlds as the forward. In the crash, the floor protects him exactly
-    as the forward did. In the soaring market, he no longer loses the upside — he
-    rides it up and only gives back the small premium. So it wins both ways. Name
-    the rhyme out loud: an option is insurance — a premium for protection — which
-    sets up the CDS later.
+    Same two seasons as the forward, one at a time. In the crash, the spot sinks
+    well below the strike and the floor holds — he's protected exactly like the
+    forward, just a premium lower (the small gap below the strike). In the soar,
+    his outcome lifts off and rides the market up; at harvest he gives back only
+    the premium (the little gap between the spot and his line). So it wins both
+    ways. Name the rhyme out loud: an option is insurance — a premium for
+    protection — which sets up the CDS later.
   </aside>
 </section>

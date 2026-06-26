@@ -18,9 +18,10 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1); /* gentle ease-out for reveals */
 
   /* ---- Animation timings (tune these) ---- */
-  --t-draw: 0.9s; /* a payoff/flow line drawing itself on */
+  --t-draw: 0.9s; /* a chart/flow line drawing itself on */
   --t-fade: 0.5s; /* annotations & captions fading/rising in */
   --t-flow: 2.6s; /* one loop of the swap/CDS arrow-flow animation */
+  --t-liftoff: 1.4s; /* the option's outcome line peeling off the flat — the focal beat */
 }
 
 .reveal {
@@ -54,9 +55,9 @@
   line-height: 1.45;
 }
 
-/* Generous breathing room around the single idea on each slide. */
-.reveal .slides section {
-  padding: 0 4%;
+.slides {
+  inset: 0 !important;
+  transform: scale(1.08) !important;
 }
 
 .muted {
