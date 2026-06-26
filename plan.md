@@ -160,9 +160,11 @@ the same mechanism now. **No payoff diagram / hockey stick — Chart B is abando
 
 ### Phase 6 — Movement 4: Synthesis
 
-- [ ] **22.** Slide 17 — Collapse all five tools back to the one sentence.
-- [ ] **23.** Slide 18 — One honest line: tools move risk, they don't erase it;
-      end constructive.
+- [~] **22.** Slide 17 — Collapse all five tools back to the one sentence
+      (`slides/synthesis.html`): roll-call of the five, then they recede (dim) as
+      the opening refrain crystallizes. _Pending review._
+- [~] **23.** Slide 18 — One honest line (`slides/close.html`): tools move risk,
+      they don't erase it; end constructive (old, human, everywhere). _Pending review._
 
 ### Phase 7 — Verification
 
