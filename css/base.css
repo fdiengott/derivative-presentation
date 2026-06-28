@@ -134,6 +134,60 @@
   line-height: 1.35;
 }
 
+/* ---- Option types (puts & calls): a 2×2 — Put over Call, split by a rule.
+ * Each row: buyer on the left (title, one-line definition, payoff chart),
+ * seller on the right (takes the premium, bets against exercise; opposite
+ * shape). Denser than any other slide, so type steps down hard. The buyer's
+ * intro line is swapped in place for its definition (see .ot-textswap). */
+.reveal .ot-row {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  column-gap: 1.4em;
+  align-items: start;
+  text-align: left;
+}
+.reveal .ot-divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  opacity: 0.45;
+  margin: 0.35em 0;
+}
+.reveal .ot-title {
+  font-size: 0.92em;
+  font-weight: 600;
+  margin: 0;
+}
+/* the buyer's intro and its definition share one slot, so the definition
+ * replaces the intro in place rather than pushing the chart down. */
+.reveal .ot-textswap {
+  position: relative;
+  min-height: 2.6em;
+  margin-top: 0.15em;
+}
+.reveal .ot-textswap > p {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: 0.5em;
+  line-height: 1.35;
+}
+.reveal .ot-seller .ot-seller-title {
+  margin: 0.5em 0 0.4em;
+}
+.ot-seller-title,
+.ot-buyer-title {
+  font-size: 0.5em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.reveal .ot-seller p {
+  font-size: 0.5em;
+  line-height: 1.4;
+  margin: 0.35em 0;
+}
+
 /* ---- Generic fade/rise-in, usable on any element (HTML or SVG) ----
  * Triggered by reveal fragments (.fragment.visible) or JS (.show). */
 .reveal .reveal-in {

@@ -275,6 +275,38 @@
   vector-effect: non-scaling-stroke;
 }
 
+.viz.payoff {
+  width: 92%;
+  margin: 0.1em auto 0;
+}
+.viz .payoff-line {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* NB: deliberately NO vector-effect: non-scaling-stroke. */
+}
+.viz .payoff-line.drawable {
+  stroke-dasharray: 1.05;
+  stroke-dashoffset: 1.05;
+}
+/* the strike: a soft dashed vertical reference where the buyer's line kinks. */
+.viz .ref {
+  stroke: var(--line);
+  stroke-width: 2;
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.8;
+}
+/* this chart's viewBox is half the width of the temporal ones, so dial text
+ * down to keep labels visually the same size. */
+.viz.payoff .tick-label,
+.viz.payoff .axis-label,
+.viz.payoff .note {
+  font-size: 12px;
+}
+
 /* ---- Animation primitives ----
  * Two triggers, same end state:
  *   1. CSS-only: give the SVG element class="fragment" so reveal.js toggles

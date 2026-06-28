@@ -138,6 +138,13 @@ the same mechanism now. **No payoff diagram / hockey stick — Chart B is abando
   down-world stay-flat (strike minus premium); wins in both the forward's good
   and bad years minus premium; "an option is insurance" — the happy ending.
   _Rework: re-aligned to the temporal multi-world grammar._
+- [x] **17b.** Option types (`slides/option-types.html`): puts vs. calls in a 2×2 —
+  Put over Call, buyer (title, one-line definition, payoff chart) on the left,
+  seller (takes the premium, bets against exercise, opposite chart shape) on the
+  right; one idea revealed per click. _Added later (not in the original plan):
+  deliberately reintroduces the abandoned payoff-diagram grammar (X = market price
+  at expiry, Y = profit) — distinct from the temporal charts, and flagged as such
+  in the speaker notes._
 
 ### Phase 4 — The Bridge
 

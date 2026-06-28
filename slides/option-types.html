@@ -1,0 +1,128 @@
+<!-- Types of options: puts and calls. A 2×2 — Put (top) over Call (bottom),
+     buyer on the left, seller on the right, split by a horizontal rule.
+     One idea per click: Put title → definition → payoff chart; then Call the
+     same way; then both seller sides together. The payoff charts are a DIFFERENT
+     chart grammar from the rest of the deck — X = market price at expiry, Y =
+     profit (the hockey stick), NOT time. Called out in the speaker notes. -->
+<section>
+  <p class="kicker">Two flavors of option</p>
+
+  <!-- ============================ PUT (top) ============================ -->
+  <div class="ot-row">
+    <div class="ot-buyer">
+      <p class="ot-title fragment" data-fragment-index="0">
+        Put
+        <span class="ot-buyer-title">The Buyer</span>
+      </p>
+      <div class="ot-textswap">
+        <p class="fragment fade-in-then-out" data-fragment-index="0">
+          Our farmer: protecting himself by locking in the right to <span class="accent">sell</span> at a predetermined
+          price.
+        </p>
+        <p class="fragment" data-fragment-index="1">
+          The right, never the obligation, to <span class="accent">sell</span> at a locked price.
+        </p>
+      </div>
+
+      <svg
+        class="viz payoff"
+        viewBox="0 0 300 185"
+        role="img"
+        aria-label="A put buyer's payoff: profit rises as the market price falls below the strike, and flattens at minus the premium above it"
+      >
+        <!-- chart frame fades in with the line on the same beat -->
+        <g class="fragment" data-fragment-index="2">
+          <line class="axis" x1="46" y1="22" x2="46" y2="165" />
+          <line class="axis" x1="40" y1="104" x2="292" y2="104" />
+          <polyline class="axis" points="40,30 46,22 52,30" />
+          <polyline class="axis" points="284,98 292,104 284,110" />
+          <text class="axis-label" x="16" y="95" text-anchor="middle" transform="rotate(-90 16 95)">profit</text>
+          <text class="tick-label" x="290" y="122" text-anchor="end">market price →</text>
+          <text class="tick-label" x="42" y="100" text-anchor="end">0</text>
+          <line class="ref" x1="188" y1="30" x2="188" y2="158" />
+          <text class="tick-label" x="188" y="174" text-anchor="middle">strike</text>
+          <text class="note muted" x="252" y="146" text-anchor="middle">−premium</text>
+        </g>
+        <path
+          class="payoff-line drawable fragment"
+          data-fragment-index="2"
+          pathLength="1"
+          d="M 56 44 L 188 128 L 286 128"
+        />
+      </svg>
+    </div>
+
+    <div class="ot-seller">
+      <p class="ot-seller-title fragment" data-fragment-index="6">The seller</p>
+      <p class="fragment" data-fragment-index="6">
+        Sells the farmer his insurance against price dropping — gets the premium, betting the price holds up.
+      </p>
+      <p class="fragment muted" data-fragment-index="7">Their payoff is the buyer's, flipped — the opposite shape.</p>
+    </div>
+  </div>
+
+  <hr class="ot-divider" />
+
+  <!-- =========================== CALL (bottom) =========================== -->
+  <div class="ot-row">
+    <div class="ot-buyer">
+      <p class="ot-title fragment" data-fragment-index="3">
+        Call
+        <span class="ot-buyer-title">The Buyer</span>
+      </p>
+      <div class="ot-textswap">
+        <p class="fragment fade-in-then-out" data-fragment-index="3">
+          An airline: dreading a spike in fuel prices before next season. They protect themselves by locking in the
+          right to <span class="accent">buy</span> fuel at a predetermined price.
+        </p>
+        <p class="fragment" data-fragment-index="4">
+          The right, never the obligation, to <span class="accent">buy</span> at a locked price.
+        </p>
+      </div>
+
+      <svg
+        class="viz payoff"
+        viewBox="0 0 300 185"
+        role="img"
+        aria-label="A call buyer's payoff: flat at minus the premium below the strike, then profit rises as the market price climbs above it"
+      >
+        <g class="fragment" data-fragment-index="5">
+          <line class="axis" x1="46" y1="22" x2="46" y2="165" />
+          <line class="axis" x1="40" y1="104" x2="292" y2="104" />
+          <polyline class="axis" points="40,30 46,22 52,30" />
+          <polyline class="axis" points="284,98 292,104 284,110" />
+          <text class="axis-label" x="16" y="95" text-anchor="middle" transform="rotate(-90 16 95)">profit</text>
+          <text class="tick-label" x="290" y="122" text-anchor="end">market price →</text>
+          <text class="tick-label" x="42" y="100" text-anchor="end">0</text>
+          <line class="ref" x1="188" y1="30" x2="188" y2="158" />
+          <text class="tick-label" x="188" y="174" text-anchor="middle">strike</text>
+          <text class="note muted" x="92" y="146" text-anchor="middle">−premium</text>
+        </g>
+        <path
+          class="payoff-line drawable fragment"
+          data-fragment-index="5"
+          pathLength="1"
+          d="M 56 128 L 188 128 L 286 44"
+        />
+      </svg>
+    </div>
+
+    <div class="ot-seller">
+      <p class="ot-seller-title fragment" data-fragment-index="6">The seller</p>
+      <p class="fragment" data-fragment-index="6">
+        Sells the airline its ceiling — and pockets the premium, betting the price stays down.
+      </p>
+      <p class="fragment muted" data-fragment-index="7">Same story, mirrored — the opposite shape.</p>
+    </div>
+  </div>
+
+  <aside class="notes">
+    Two flavours of option, same grammar. A PUT is the right to sell — our farmer's instrument from a moment ago. A CALL
+    is the right to buy: meet an airline, terrified fuel prices spike before next season; a call lets it lock in a
+    ceiling. Both are a right, never an obligation, bought for a premium. NOTE ON THE CHARTS: these are payoff diagrams,
+    not the time charts from earlier — the horizontal axis is the market price at expiry, the vertical axis is profit.
+    The put pays off when price falls below the strike; the call when it climbs above. On the right is the seller in
+    each case: they take the premium up front and bet the option is never exercised — their payoff is just the buyer's
+    chart flipped, the opposite shape. We don't go deeper than that here; selling options is a whole talk of its own.
+  </aside>
+</section>
