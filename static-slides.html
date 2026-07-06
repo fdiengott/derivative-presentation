@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Derivatives — a tool for moving risk</title>
+
+    <!-- reveal.js core + base theme (overridden by our stylesheets) -->
+    <link rel="stylesheet" href="vendor/reveal/dist/reset.css" />
+    <link rel="stylesheet" href="vendor/reveal/dist/reveal.css" />
+    <link rel="stylesheet" href="vendor/reveal/dist/theme/white.css" id="theme" />
+
+    <!-- our styles: base theme, then the SVG visual system -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/viz.css" />
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Each slide is its own file under slides/, pulled in by includes.js
+           before Reveal initializes. Add a slide by adding a data-include. -->
+      <div class="slides">
+        <!-- Movement 1 — The Ache -->
+        <section>
+  <p class="kicker">A short talk on financial derivatives</p>
+  <h1>Moving risk</h1>
+  <p class="muted reveal-in fragment">Forwards · Futures · Options · Swaps · Credit default swaps</p>
+  <aside class="notes">
+    Caveats: This presentation is me learning in public so excuse some depth of knowledge. My goal for this presentation
+    is fully to build a strong conceptual understanding of each of these instruments, so there will be some lack of
+    precision and simplification of the plumbing for the sake of conceptual clarity.
+
+    <div>
+      Five instruments, one idea. By the end they should all feel like obvious, humane inventions — not Wall Street
+      wizardry.
+    </div>
+  </aside>
+</section>
+        <!-- The emotional hook: abundance and dread staged in one frame. The lush field
+     is pleasant; the words deliver the despair. Reveal one beat at a time. -->
+<section>
+  <p class="kicker">Movement 1 · The ache</p>
+  <h2>A farmer walks out to a perfect harvest.</h2>
+
+  <svg class="viz" viewBox="0 0 640 200" role="img" aria-label="A full field of wheat">
+    <defs>
+      <g id="stalk">
+        <path
+          class="stalk"
+          d="M0,0 L0,-44 M0,-46 L0,-56
+             M0,-28 C-7,-30 -9,-36 -8,-42 M0,-28 C7,-30 9,-36 8,-42
+             M0,-35 C-6,-37 -8,-42 -7,-47 M0,-35 C6,-37 8,-42 7,-47
+             M0,-42 C-5,-44 -6,-48 -5,-52 M0,-42 C5,-44 6,-48 5,-52"
+        />
+      </g>
+    </defs>
+
+    <use href="#stalk" transform="translate(46,176) scale(0.92)" />
+    <use href="#stalk" transform="translate(84,180) scale(1.05)" />
+    <use href="#stalk" transform="translate(122,174) scale(0.86)" />
+    <use href="#stalk" transform="translate(160,182) scale(1.12)" />
+    <use href="#stalk" transform="translate(198,176) scale(0.98)" />
+    <use href="#stalk" transform="translate(236,180) scale(1.08)" />
+    <use href="#stalk" transform="translate(274,173) scale(0.9)" />
+    <use href="#stalk" transform="translate(312,181) scale(1.1)" />
+    <use href="#stalk" transform="translate(350,176) scale(0.95)" />
+    <use href="#stalk" transform="translate(388,182) scale(1.06)" />
+    <use href="#stalk" transform="translate(426,174) scale(0.88)" />
+    <use href="#stalk" transform="translate(464,180) scale(1.12)" />
+    <use href="#stalk" transform="translate(502,176) scale(0.97)" />
+    <use href="#stalk" transform="translate(540,181) scale(1.04)" />
+    <use href="#stalk" transform="translate(578,175) scale(0.9)" />
+  </svg>
+
+  <p class="reveal-in fragment">And feels <span class="accent">despair</span>.</p>
+  <p class="reveal-in fragment muted">A great crop everywhere means low prices — they won't recoup their costs.</p>
+
+  <aside class="notes">
+    The counterintuitive beat: abundance is the problem. Price is set by everyone's harvest, so a bumper crop across the
+    whole region drives the price below his costs.
+  </aside>
+</section>
+        <!-- The core thesis — the refrain every later slide ladders back to. -->
+<section>
+  <p class="kicker">The whole idea</p>
+  <p class="thesis">
+    A derivative is a tool for <span class="accent">moving risk</span>.
+  </p>
+  <p class="thesis reveal-in fragment muted">
+    From someone who fears it — to someone willing to bear it.
+  </p>
+
+  <aside class="notes">
+    Plant it cleanly and let it breathe. This is the callback target for the
+    entire talk: every instrument we meet is a variation on this one sentence.
+  </aside>
+</section>
+
+        <!-- Movement 2 — The Farmer's Staircase -->
+        <!-- Forward (Slide 5): lock a price with a handshake. Teach the temporal chart
+     ONCE here: X = time (today → harvest), Y = price. The flat locked line is
+     certainty. This chart type is reused by forward-worlds, future, and option. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>Forwards: Lock in a price with a handshake.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="A price-over-time chart showing a flat, locked-in price across the season"
+  >
+    <!-- axes, taught once: across is time, up is price -->
+    <line class="axis" x1="70" y1="40" x2="70" y2="340" />
+    <line class="axis" x1="70" y1="340" x2="610" y2="340" />
+    <polyline class="axis" points="64,52 70,40 76,52" />
+    <polyline class="axis" points="598,334 610,340 598,346" />
+    <text class="axis-label" x="22" y="190" text-anchor="middle" transform="rotate(-90 22 190)">price ($)</text>
+    <text class="tick-label" x="90" y="364" text-anchor="middle">today</text>
+    <text class="tick-label" x="590" y="364" text-anchor="middle">harvest</text>
+
+    <!-- the locked price: a flat, solid line across the whole season. Draws on click. -->
+    <path class="locked drawable fragment" data-fragment-index="0" pathLength="1" d="M 90 180 L 590 180" />
+    <text class="tick-label fragment" data-fragment-index="0" x="586" y="170" text-anchor="end">locked price</text>
+  </svg>
+
+  <p class="thesis reveal-in fragment" data-fragment-index="1">
+    No matter what happens with the market, the price will stay the <span class="accent">same</span>.
+  </p>
+
+  <aside class="notes">
+    He agrees a price today for grain delivered after harvest — the price you can lock in today for delivery later
+    (never "what the market thinks prices will be"; that conflation is the most common derivatives misconception). Teach
+    the axes here: across is time, from today to harvest; up is price. The locked price is the same number on every day
+    of the season, so it draws as a flat, solid line. Whatever the market does between now and harvest, that line
+    doesn't move. Certainty looks flat.
+  </aside>
+</section>
+        <!-- Forward, the multi-world reveal (Slides 6-9). The SAME temporal chart, one
+     possible season at a time: a dashed spot price wanders across the season and
+     ends below / above / near the flat locked line. Worlds replace each other
+     (reveal's fade-in-then-out) so only one world is on screen at once — the
+     multi-world reveal. The flat locked line persists throughout. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>The same handshake, different seasons.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="The locked price against a wandering spot price across several possible seasons"
+  >
+    <!-- axes: across is time, up is price -->
+    <line class="axis" x1="70" y1="40" x2="70" y2="340" />
+    <line class="axis" x1="70" y1="340" x2="610" y2="340" />
+    <polyline class="axis" points="64,52 70,40 76,52" />
+    <polyline class="axis" points="598,334 610,340 598,346" />
+    <text class="axis-label" x="22" y="190" text-anchor="middle" transform="rotate(-90 22 190)">price ($)</text>
+    <text class="tick-label" x="90" y="364" text-anchor="middle">today</text>
+    <text class="tick-label" x="590" y="364" text-anchor="middle">harvest</text>
+
+    <!-- the locked price persists from the previous slide -->
+    <path class="locked" d="M 90 180 L 590 180" />
+    <text class="tick-label" x="92" y="170" text-anchor="start">locked price</text>
+
+    <!-- world 1: prices crash — the spot wanders down, ending below the lock -->
+    <g class="fragment fade-in-then-out" data-fragment-index="0">
+      <polyline class="spot" points="90,176 150,158 210,196 270,182 330,214 390,236 450,250 510,266 590,276" />
+      <line class="gap good" x1="590" y1="180" x2="590" y2="276" />
+      <circle class="dot lock" cx="590" cy="180" r="6" />
+      <circle class="dot market" cx="590" cy="276" r="6" />
+      <text class="note good" x="100" y="116">Prices crash — he still sells at the lock.</text>
+    </g>
+
+    <!-- world 2: prices soar — the spot wanders up, ending above the lock -->
+    <g class="fragment fade-in-then-out" data-fragment-index="1">
+      <polyline class="spot" points="90,184 150,200 210,162 270,150 330,122 390,132 450,104 510,96 590,84" />
+      <line class="gap bad" x1="590" y1="84" x2="590" y2="180" />
+      <circle class="dot lock" cx="590" cy="180" r="6" />
+      <circle class="dot market" cx="590" cy="84" r="6" />
+      <text class="note bad" x="100" y="312">Prices soar — he's stuck selling at the lock.</text>
+    </g>
+
+    <!-- world 3: prices land near the lock — barely a difference -->
+    <g class="fragment fade-in-then-out" data-fragment-index="2">
+      <polyline class="spot" points="90,178 150,164 210,196 270,174 330,200 390,168 450,190 510,176 590,186" />
+      <circle class="dot lock" cx="590" cy="180" r="6" />
+      <circle class="dot market" cx="590" cy="186" r="6" />
+      <text class="note muted" x="100" y="116">Prices land near the lock — just peace of mind.</text>
+    </g>
+  </svg>
+
+  <p class="thesis reveal-in fragment" data-fragment-index="3">
+    Whatever the world does, his number <span class="accent">doesn't move</span>.
+  </p>
+
+  <aside class="notes">
+    Step through the seasons one at a time — each is one possible world, and only one is on screen at once. The dashed
+    line is the spot price wandering from today to harvest; the flat line is the price he locked. Crash → the spot ends
+    below the lock, so the forward saved him. Soar → the spot ends above the lock, so it cost him. Near → barely a
+    difference, just peace of mind. The point isn't winning or losing — it's that his number stopped moving.
+  </aside>
+</section>
+        <!-- Future (step 15): the same deal, standardized, with a clearinghouse referee
+     so strangers can trade without trusting each other. The economics are
+     identical — only the plumbing changed. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>Futures: the same deal, between strangers.</h2>
+
+  <svg class="viz" viewBox="0 0 640 300" role="img" aria-label="Two strangers trading through a clearinghouse referee">
+    <!-- the two parties -->
+    <circle class="person" cx="140" cy="110" r="20" />
+    <path class="person" d="M110,185 C110,140 170,140 170,185" />
+    <text class="glyph-label" x="140" y="215">the farmer</text>
+
+    <circle class="person" cx="500" cy="110" r="20" />
+    <path class="person" d="M470,185 C470,140 530,140 530,185" />
+    <text class="glyph-label" x="500" y="215">a stranger</text>
+
+    <!-- start: a private handshake. Fades out on the first click. -->
+    <g class="fragment fade-out" data-fragment-index="0">
+      <line class="link" x1="172" y1="150" x2="468" y2="150" />
+      <text class="glyph-label muted" x="320" y="138">a private handshake</text>
+    </g>
+
+    <!-- click 1: a clearinghouse intermediary slides between them -->
+    <g class="fragment" data-fragment-index="0">
+      <line class="link" x1="172" y1="150" x2="250" y2="150" />
+      <line class="link" x1="468" y1="150" x2="390" y2="150" />
+      <rect class="box" x="250" y="124" width="140" height="52" rx="8" />
+      <text class="glyph-label" x="320" y="156">clearinghouse</text>
+    </g>
+  </svg>
+
+  <p class="reveal-in fragment" data-fragment-index="1">
+    With an intermediary, they need not trust each other — only the clearinghouse.
+    <span class="muted">Same chart. New plumbing.</span>
+  </p>
+  <p class="reveal-in fragment muted" data-fragment-index="2">
+    But it's still a cage. Yes, guarding against downside, but a cage preventing exposure to a soaring market.
+  </p>
+
+  <aside class="notes">
+    A future is a forward, standardized and traded on an exchange. The clearinghouse stands between two strangers and
+    guarantees the trade, so they don't have to know or trust each other. Stress that the economics — the same temporal
+    chart — are identical to the forward; only the plumbing changed. The remaining ache is the same cage, which the
+    option finally opens.
+  </aside>
+</section>
+        <!-- Option (step 16): same temporal chart, one season. He pays a premium for a
+     floor at the strike; below it he's protected like a forward. THE beat: when
+     the spot climbs past the strike, his outcome line lifts off the flat and
+     rides the market up — the cage opening. Concentrate animation here. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>Options: the right, not the obligation.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="The farmer's outcome lifting off the strike and riding the spot price up once it crosses the strike"
+  >
+    <!-- axes: across is time, up is price -->
+    <line class="axis" x1="70" y1="40" x2="70" y2="340" />
+    <line class="axis" x1="70" y1="340" x2="610" y2="340" />
+    <polyline class="axis" points="64,52 70,40 76,52" />
+    <polyline class="axis" points="598,334 610,340 598,346" />
+    <text class="axis-label" x="22" y="190" text-anchor="middle" transform="rotate(-90 22 190)">price ($)</text>
+    <text class="tick-label" x="90" y="364" text-anchor="middle">today</text>
+    <text class="tick-label" x="590" y="364" text-anchor="middle">harvest</text>
+
+    <!-- the strike: a flat reference, and this season's spot climbing past it -->
+    <path class="strike" d="M 90 200 L 590 200" />
+    <text class="tick-label" x="586" y="192" text-anchor="end">strike</text>
+    <polyline class="spot" points="90,232 150,224 210,238 270,214 330,200 390,176 450,150 510,116 590,84" />
+    <text class="tick-label" x="100" y="248" text-anchor="start">spot price</text>
+
+    <!-- click 1: a floor at the strike, minus the premium he paid up front -->
+    <g class="fragment" data-fragment-index="0">
+      <path class="outcome" d="M 90 220 L 330 220" />
+      <path class="outcome ghost" d="M 330 220 L 590 220" />
+      <line class="gap soft" x1="98" y1="200" x2="98" y2="220" />
+      <text class="note muted" x="108" y="214">premium</text>
+    </g>
+
+    <!-- click 2: THE beat — the outcome lifts off the flat at the crossing and
+         rides the spot up. The ghost flat stays: where a forward would trap him. -->
+    <path
+      class="outcome liftoff fragment"
+      data-fragment-index="1"
+      pathLength="1"
+      d="M 330 220 L 390 196 L 450 170 L 510 136 L 590 104"
+    />
+    <g class="fragment" data-fragment-index="1">
+      <circle class="crossing-ring" cx="330" cy="200" r="8" />
+      <circle class="crossing-dot" cx="330" cy="200" r="5" />
+      <text class="note" x="318" y="190" text-anchor="end">spot crosses the strike</text>
+    </g>
+  </svg>
+
+  <p class="reveal-in fragment" data-fragment-index="0">
+    Below the strike, a <span class="accent">floor</span> protects him — just like the forward.
+  </p>
+  <p class="reveal-in fragment" data-fragment-index="1">
+    But once the spot climbs past it, his outcome <span class="accent">lifts off</span>
+    and rides the market up.
+  </p>
+  <p class="reveal-in fragment muted" data-fragment-index="2">All it ever cost him was the premium.</p>
+
+  <aside class="notes">
+    He pays a premium up front for the right — not the obligation — to sell at the strike. First beat: below the strike
+    he has a floor, just like the forward, sitting a touch lower because of the premium he paid. Then the beat that
+    matters: this season the spot climbs, and the moment it crosses the strike his outcome line lifts off the flat and
+    rides the market up — the cage opens. The faded flat line is where a forward would have trapped him. The only price
+    was the premium.
+  </aside>
+</section>
+        <!-- Option, the multi-world reveal (step 17): the same temporal chart across two
+     seasons, one at a time. Crash → the floor protects him, just like the forward
+     (only a premium lower). Soar → his outcome lifts off and rides the market up.
+     It wins both ways, minus the premium. The rhyme: an option is insurance. -->
+<section>
+  <p class="kicker">Movement 2 · The staircase</p>
+  <h2>It wins in both seasons — minus the premium.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="The option's outcome across a crashing season and a soaring season"
+  >
+    <!-- axes: across is time, up is price -->
+    <line class="axis" x1="70" y1="40" x2="70" y2="340" />
+    <line class="axis" x1="70" y1="340" x2="610" y2="340" />
+    <polyline class="axis" points="64,52 70,40 76,52" />
+    <polyline class="axis" points="598,334 610,340 598,346" />
+    <text class="axis-label" x="22" y="190" text-anchor="middle" transform="rotate(-90 22 190)">price ($)</text>
+    <text class="tick-label" x="90" y="364" text-anchor="middle">today</text>
+    <text class="tick-label" x="590" y="364" text-anchor="middle">harvest</text>
+
+    <!-- the strike persists across both worlds -->
+    <path class="strike" d="M 90 200 L 590 200" />
+    <text class="tick-label" x="586" y="192" text-anchor="end">strike</text>
+
+    <!-- world 1: the crash — the spot sinks below the floor; the floor holds -->
+    <g class="fragment fade-in-then-out" data-fragment-index="0">
+      <polyline class="spot" points="90,224 150,236 210,250 270,260 330,252 390,272 450,284 510,296 590,304" />
+      <path class="outcome" d="M 90 220 L 590 220" />
+      <line class="gap good" x1="590" y1="220" x2="590" y2="304" />
+      <circle class="dot lock" cx="590" cy="220" r="6" />
+      <circle class="dot market" cx="590" cy="304" r="6" />
+      <text class="note good" x="100" y="124">Prices crash — the floor protects him.</text>
+    </g>
+
+    <!-- world 2: the soar — the outcome lifts off and rides the spot up -->
+    <g class="fragment fade-in-then-out" data-fragment-index="1">
+      <polyline class="spot" points="90,232 150,224 210,238 270,214 330,200 390,176 450,150 510,116 590,84" />
+      <path class="outcome" d="M 90 220 L 330 220" />
+      <path class="outcome ghost" d="M 330 220 L 590 220" />
+      <path class="outcome" d="M 330 220 L 390 196 L 450 170 L 510 136 L 590 104" />
+      <line class="gap soft" x1="590" y1="84" x2="590" y2="104" />
+      <circle class="dot market" cx="590" cy="84" r="6" />
+      <circle class="dot lock" cx="590" cy="104" r="6" />
+      <text class="note good" x="100" y="312">Prices soar — he rides the upside, less the premium.</text>
+    </g>
+  </svg>
+
+  <p class="thesis reveal-in fragment" data-fragment-index="2">An option is <span class="accent">insurance</span>.</p>
+  <p class="reveal-in fragment muted" data-fragment-index="3">A premium for protection</p>
+
+  <aside class="notes">
+    Same two seasons as the forward, one at a time. In the crash, the spot sinks well below the strike and the floor
+    holds — he's protected exactly like the forward, just a premium lower (the small gap below the strike). In the soar,
+    his outcome lifts off and rides the market up; at harvest he gives back only the premium (the little gap between the
+    spot and his line). So it wins both ways. Name the rhyme out loud: an option is insurance — a premium for protection
+    — which sets up the CDS later.
+  </aside>
+</section>
+        <!-- Types of options: puts and calls. A 2×2 — Put (top) over Call (bottom),
+     buyer on the left, seller on the right, split by a horizontal rule.
+     One idea per click: Put title → definition → payoff chart; then Call the
+     same way; then both seller sides together. The payoff charts are a DIFFERENT
+     chart grammar from the rest of the deck — X = market price at expiry, Y =
+     profit (the hockey stick), NOT time. Called out in the speaker notes. -->
+<section>
+  <p class="kicker">Two flavors of option</p>
+
+  <!-- ============================ PUT (top) ============================ -->
+  <div class="ot-row">
+    <div class="ot-buyer">
+      <p class="ot-title fragment" data-fragment-index="0">
+        Put
+        <span class="ot-buyer-title">The Buyer</span>
+      </p>
+      <div class="ot-textswap">
+        <p class="fragment fade-in-then-out" data-fragment-index="0">
+          Our farmer: protecting himself by locking in the right to <span class="accent">sell</span> at a predetermined
+          price.
+        </p>
+        <p class="fragment" data-fragment-index="1">
+          The right, never the obligation, to <span class="accent">sell</span> at a locked price.
+        </p>
+      </div>
+
+      <svg
+        class="viz payoff"
+        viewBox="0 0 300 185"
+        role="img"
+        aria-label="A put buyer's payoff: profit rises as the market price falls below the strike, and flattens at minus the premium above it"
+      >
+        <!-- chart frame fades in with the line on the same beat -->
+        <g class="fragment" data-fragment-index="2">
+          <line class="axis" x1="46" y1="22" x2="46" y2="165" />
+          <line class="axis" x1="40" y1="104" x2="292" y2="104" />
+          <polyline class="axis" points="40,30 46,22 52,30" />
+          <polyline class="axis" points="284,98 292,104 284,110" />
+          <text class="axis-label" x="16" y="95" text-anchor="middle" transform="rotate(-90 16 95)">profit</text>
+          <text class="tick-label" x="290" y="122" text-anchor="end">market price →</text>
+          <text class="tick-label" x="42" y="100" text-anchor="end">0</text>
+          <line class="ref" x1="188" y1="30" x2="188" y2="158" />
+          <text class="tick-label" x="188" y="174" text-anchor="middle">strike</text>
+          <text class="note muted" x="252" y="146" text-anchor="middle">−premium</text>
+        </g>
+        <path
+          class="payoff-line drawable fragment"
+          data-fragment-index="2"
+          pathLength="1"
+          d="M 56 44 L 188 128 L 286 128"
+        />
+      </svg>
+    </div>
+
+    <div class="ot-seller">
+      <p class="ot-seller-title fragment" data-fragment-index="6">The seller</p>
+      <p class="fragment" data-fragment-index="6">
+        Sells the farmer his insurance against price dropping — gets the premium, betting the price holds up.
+      </p>
+      <p class="fragment muted" data-fragment-index="7">Their payoff is the buyer's, flipped — the opposite shape.</p>
+    </div>
+  </div>
+
+  <hr class="ot-divider" />
+
+  <!-- =========================== CALL (bottom) =========================== -->
+  <div class="ot-row">
+    <div class="ot-buyer">
+      <p class="ot-title fragment" data-fragment-index="3">
+        Call
+        <span class="ot-buyer-title">The Buyer</span>
+      </p>
+      <div class="ot-textswap">
+        <p class="fragment fade-in-then-out" data-fragment-index="3">
+          An airline: dreading a spike in fuel prices before next season. They protect themselves by locking in the
+          right to <span class="accent">buy</span> fuel at a predetermined price.
+        </p>
+        <p class="fragment" data-fragment-index="4">
+          The right, never the obligation, to <span class="accent">buy</span> at a locked price.
+        </p>
+      </div>
+
+      <svg
+        class="viz payoff"
+        viewBox="0 0 300 185"
+        role="img"
+        aria-label="A call buyer's payoff: flat at minus the premium below the strike, then profit rises as the market price climbs above it"
+      >
+        <g class="fragment" data-fragment-index="5">
+          <line class="axis" x1="46" y1="22" x2="46" y2="165" />
+          <line class="axis" x1="40" y1="104" x2="292" y2="104" />
+          <polyline class="axis" points="40,30 46,22 52,30" />
+          <polyline class="axis" points="284,98 292,104 284,110" />
+          <text class="axis-label" x="16" y="95" text-anchor="middle" transform="rotate(-90 16 95)">profit</text>
+          <text class="tick-label" x="290" y="122" text-anchor="end">market price →</text>
+          <text class="tick-label" x="42" y="100" text-anchor="end">0</text>
+          <line class="ref" x1="188" y1="30" x2="188" y2="158" />
+          <text class="tick-label" x="188" y="174" text-anchor="middle">strike</text>
+          <text class="note muted" x="92" y="146" text-anchor="middle">−premium</text>
+        </g>
+        <path
+          class="payoff-line drawable fragment"
+          data-fragment-index="5"
+          pathLength="1"
+          d="M 56 128 L 188 128 L 286 44"
+        />
+      </svg>
+    </div>
+
+    <div class="ot-seller">
+      <p class="ot-seller-title fragment" data-fragment-index="6">The seller</p>
+      <p class="fragment" data-fragment-index="6">
+        Sells the airline its ceiling — and pockets the premium, betting the price stays down.
+      </p>
+      <p class="fragment muted" data-fragment-index="7">Same story, mirrored — the opposite shape.</p>
+    </div>
+  </div>
+
+  <aside class="notes">
+    Two flavours of option, same grammar. A PUT is the right to sell — our farmer's instrument from a moment ago. A CALL
+    is the right to buy: meet an airline, terrified fuel prices spike before next season; a call lets it lock in a
+    ceiling. Both are a right, never an obligation, bought for a premium. NOTE ON THE CHARTS: these are payoff diagrams,
+    not the time charts from earlier — the horizontal axis is the market price at expiry, the vertical axis is profit.
+    The put pays off when price falls below the strike; the call when it climbs above. On the right is the seller in
+    each case: they take the premium up front and bet the option is never exercised — their payoff is just the buyer's
+    chart flipped, the opposite shape. We don't go deeper than that here; selling options is a whole talk of its own.
+  </aside>
+</section>
+
+        <!-- The Bridge — one moment → a recurring stream -->
+        <!-- The Bridge (step 18): the load-bearing pivot. The farmer's whole world was
+     one transaction, one harvest — a single moment. But some risk recurs: every
+     month, a payment. The farmer can't show that, so we hand off to a new
+     protagonist (the baker) and the visual language shifts from charts to flows.
+     The shift is felt, not announced: a single arrow becomes a stream. -->
+<section>
+  <p class="kicker">From a moment to a stream</p>
+  <h2>Some risk doesn't arrive just once.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 300"
+    role="img"
+    aria-label="A single payment over time giving way to a recurring monthly stream of payments from the baker"
+  >
+    <defs>
+      <clipPath id="bridge-lane"><rect x="200" y="108" width="360" height="96" /></clipPath>
+      <!-- a gentle stream of monthly payments, one 200px period (5 bars) -->
+      <g id="bridge-bars">
+        <line x1="140" y1="185" x2="140" y2="140" />
+        <line x1="180" y1="185" x2="180" y2="140" />
+        <line x1="220" y1="185" x2="220" y2="140" />
+        <line x1="260" y1="185" x2="260" y2="140" />
+        <line x1="300" y1="185" x2="300" y2="140" />
+      </g>
+    </defs>
+
+    <!-- the timeline: axes retire, a bare arrow of time remains -->
+    <line class="axis" x1="80" y1="190" x2="600" y2="190" />
+    <polyline class="axis" points="592,184 600,190 592,196" />
+    <text class="tick-label" x="600" y="212" text-anchor="end">time →</text>
+
+    <!-- beat 0 (visible at start): the farmer's single moment — one payment -->
+    <g class="fragment fade-in-then-out" data-fragment-index="0">
+      <line class="flow" x1="340" y1="138" x2="340" y2="182" />
+      <polyline class="flow" points="332,170 340,186 348,170" />
+      <text class="glyph-label" x="340" y="126">one harvest</text>
+    </g>
+
+    <!-- beat 1: the same risk, but again and again — a monthly stream. On the
+         final beat these static arrows cross-fade out (see .monthly) and the
+         live marching stream below takes their place. -->
+    <g class="fragment monthly" data-fragment-index="1">
+      <g class="flow">
+        <line x1="200" y1="138" x2="200" y2="182" />
+        <polyline points="192,170 200,186 208,170" />
+      </g>
+      <g class="flow">
+        <line x1="260" y1="138" x2="260" y2="182" />
+        <polyline points="252,170 260,186 268,170" />
+      </g>
+      <g class="flow">
+        <line x1="320" y1="138" x2="320" y2="182" />
+        <polyline points="312,170 320,186 328,170" />
+      </g>
+      <g class="flow">
+        <line x1="380" y1="138" x2="380" y2="182" />
+        <polyline points="372,170 380,186 388,170" />
+      </g>
+      <g class="flow">
+        <line x1="440" y1="138" x2="440" y2="182" />
+        <polyline points="432,170 440,186 448,170" />
+      </g>
+      <g class="flow">
+        <line x1="500" y1="138" x2="500" y2="182" />
+        <polyline points="492,170 500,186 508,170" />
+      </g>
+      <g class="flow">
+        <line x1="560" y1="138" x2="560" y2="182" />
+        <polyline points="552,170 560,186 568,170" />
+      </g>
+      <text class="glyph-label" x="380" y="126">every month</text>
+    </g>
+
+    <!-- the live marching stream (hidden until the final beat) — the same
+         animation the swap slides use, introduced here on the word "stream" -->
+    <g class="month-stream">
+      <g clip-path="url(#bridge-lane)">
+        <g class="stream-anim rightward">
+          <use href="#bridge-bars" x="0" />
+          <use href="#bridge-bars" x="200" />
+          <use href="#bridge-bars" x="400" />
+          <use href="#bridge-bars" x="600" />
+        </g>
+      </g>
+      <text class="glyph-label" x="380" y="126">every month</text>
+    </g>
+
+    <!-- beat 2: a new protagonist at the source of the stream -->
+    <g class="fragment" data-fragment-index="2">
+      <circle class="person" cx="110" cy="138" r="16" />
+      <path class="person" d="M86,186 C86,150 134,150 134,186" />
+      <text class="glyph-label" x="110" y="214">the baker</text>
+    </g>
+  </svg>
+
+  <div class="caption-stack">
+    <p class="fragment fade-in-then-out" data-fragment-index="0">
+      The farmer's whole world was one harvest — a single moment.
+    </p>
+    <p class="fragment fade-in-then-out" data-fragment-index="1">But some risk returns — every month, every payment.</p>
+    <p class="fragment fade-in-then-out" data-fragment-index="2">
+      Meet the baker: a loan payment, due every single month.
+    </p>
+    <p class="fragment" data-fragment-index="3" data-anim="streaming">
+      Her risk isn't a price to bet on — it's a <span class="accent">stream</span> to manage.
+    </p>
+  </div>
+
+  <aside class="notes">
+    This is the pivot. Recap the farmer: his whole world was one transaction, one harvest — a single moment, which is
+    why a chart with one outcome could hold it. But some risk doesn't arrive once; it returns every month, every
+    payment. The farmer can't show that, so we hand off to a new protagonist — the baker, who owes a loan payment every
+    month. Notice the picture changed on its own: the charts are gone, and we're following a flow of arrows instead.
+    We've left "betting on a price" for "trading a stream." Don't announce it — let it land.
+  </aside>
+</section>
+
+        <!-- Movement 3 — Streams of Risk -->
+        <!-- Swap, beat 1 (step 19): two parties only. The baker's loan floats — a jagged
+     stream of payments. They swap: she pays a smooth, fixed stream to the bank;
+     the bank sends back the jagged floating one. The volatility moves to the
+     party built to absorb it. Bars march along each lane (height = amount), so
+     floating reads jagged and fixed reads even. Risk reshaping, not shedding. -->
+<section>
+  <p class="kicker">Movement 3 · Streams of risk</p>
+  <h2>Swaps: a bumpy stream for a smooth one.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 340"
+    role="img"
+    aria-label="The baker swaps a jagged floating payment stream for a smooth fixed one; the floating stream moves to the bank"
+  >
+    <defs>
+      <clipPath id="swap-lane-up"><rect x="140" y="92" width="360" height="80" /></clipPath>
+      <clipPath id="swap-lane-lo"><rect x="140" y="182" width="360" height="80" /></clipPath>
+
+      <!-- jagged (floating) bars on the upper lane, baseline y=168 -->
+      <g id="swap-float-up">
+        <line class="bar" x1="120" y1="168" x2="120" y2="142" />
+        <line class="bar" x1="170" y1="168" x2="170" y2="120" />
+        <line class="bar" x1="220" y1="168" x2="220" y2="150" />
+        <line class="bar" x1="270" y1="168" x2="270" y2="124" />
+        <line class="bar" x1="320" y1="168" x2="320" y2="134" />
+        <line class="bar" x1="370" y1="168" x2="370" y2="116" />
+        <line class="bar" x1="420" y1="168" x2="420" y2="146" />
+        <line class="bar" x1="470" y1="168" x2="470" y2="128" />
+      </g>
+      <!-- even (fixed) bars on the upper lane, baseline y=168 -->
+      <g id="swap-fixed-up">
+        <line class="bar calm" x1="120" y1="168" x2="120" y2="138" />
+        <line class="bar calm" x1="170" y1="168" x2="170" y2="138" />
+        <line class="bar calm" x1="220" y1="168" x2="220" y2="138" />
+        <line class="bar calm" x1="270" y1="168" x2="270" y2="138" />
+        <line class="bar calm" x1="320" y1="168" x2="320" y2="138" />
+        <line class="bar calm" x1="370" y1="168" x2="370" y2="138" />
+        <line class="bar calm" x1="420" y1="168" x2="420" y2="138" />
+        <line class="bar calm" x1="470" y1="168" x2="470" y2="138" />
+      </g>
+      <!-- jagged (floating) bars on the lower lane, baseline y=258 -->
+      <g id="swap-float-lo">
+        <line class="bar" x1="120" y1="258" x2="120" y2="232" />
+        <line class="bar" x1="170" y1="258" x2="170" y2="210" />
+        <line class="bar" x1="220" y1="258" x2="220" y2="240" />
+        <line class="bar" x1="270" y1="258" x2="270" y2="214" />
+        <line class="bar" x1="320" y1="258" x2="320" y2="224" />
+        <line class="bar" x1="370" y1="258" x2="370" y2="206" />
+        <line class="bar" x1="420" y1="258" x2="420" y2="236" />
+        <line class="bar" x1="470" y1="258" x2="470" y2="218" />
+      </g>
+    </defs>
+
+    <!-- the baker is present throughout -->
+    <circle class="person" cx="68" cy="150" r="15" />
+    <path class="person" d="M48,196 C48,165 88,165 88,196" />
+    <text class="glyph-label" x="68" y="216">the baker</text>
+
+    <!-- beat A (visible at start): her loan floats — a jagged stream leaving her -->
+    <g class="fragment fade-out" data-fragment-index="0">
+      <g clip-path="url(#swap-lane-up)">
+        <g class="stream-anim rightward">
+          <use href="#swap-float-up" x="0" />
+          <use href="#swap-float-up" x="400" />
+        </g>
+      </g>
+      <polyline class="flow" points="510,160 524,168 510,176" />
+      <text class="note bad" x="320" y="106" text-anchor="middle">floating</text>
+    </g>
+
+    <!-- beat B (on the swap): bank enters; she pays fixed (smooth), the bank
+         sends the floating (jagged) — the volatility now lives on its side -->
+    <g class="fragment" data-fragment-index="0">
+      <!-- the bank -->
+      <polyline class="person" points="526,162 575,136 624,162" />
+      <line class="person" x1="532" y1="162" x2="618" y2="162" />
+      <line class="person" x1="544" y1="162" x2="544" y2="192" />
+      <line class="person" x1="575" y1="162" x2="575" y2="192" />
+      <line class="person" x1="606" y1="162" x2="606" y2="192" />
+      <line class="person" x1="530" y1="192" x2="620" y2="192" />
+      <text class="glyph-label" x="575" y="214">the bank</text>
+
+      <!-- upper lane: baker → bank, smooth fixed -->
+      <g clip-path="url(#swap-lane-up)">
+        <g class="stream-anim rightward calm">
+          <use href="#swap-fixed-up" x="0" />
+          <use href="#swap-fixed-up" x="400" />
+        </g>
+      </g>
+      <polyline class="flow calm" points="510,160 524,168 510,176" />
+      <text class="note good" x="320" y="106" text-anchor="middle">fixed</text>
+
+      <!-- lower lane: bank → baker, jagged floating -->
+      <g clip-path="url(#swap-lane-lo)">
+        <g class="stream-anim leftward">
+          <use href="#swap-float-lo" x="0" />
+          <use href="#swap-float-lo" x="400" />
+        </g>
+      </g>
+      <polyline class="flow" points="126,250 112,258 126,266" />
+      <text class="note bad" x="320" y="286" text-anchor="middle">floating</text>
+    </g>
+  </svg>
+
+  <div class="caption-stack">
+    <p class="fragment fade-out" data-fragment-index="0">
+      The baker's loan floats — some months gentle, some months frightening.
+    </p>
+    <p class="fragment fade-in-then-out" data-fragment-index="0">
+      They swap streams: she pays smooth and <span class="accent">fixed</span>; the bank takes the bumpy one.
+    </p>
+    <p class="fragment" data-fragment-index="1">
+      The volatility didn't vanish — it moved to the party built to absorb it.
+    </p>
+  </div>
+
+  <aside class="notes">
+    Two parties only for now. The baker has a variable-rate loan: her payment floats, jagged and unpredictable, and she
+    craves a number she can plan around. The bank's revenue rises with rates, so a floating stream is its natural
+    habitat. So they swap: she now pays a smooth, fixed stream to the bank, and the bank sends the floating one back.
+    Watch where the jaggedness goes — it doesn't disappear, it moves to the bank, which is built to carry it. This is
+    the key idea: a swap is risk reshaping, not risk shedding.
+  </aside>
+</section>
+        <!-- Swap, beat 2 (step 20): the plumbing. The tidy two-party picture is a
+     simplification — a dealer sits in the middle, matching the two sides and
+     keeping a small sliver; behind the whole trade stands the clearinghouse, the
+     same referee from the futures slide, guaranteeing it. The two marching lanes
+     persist from beat 1; the dealer occludes the middle so each stream becomes
+     two segments meeting at it. Bars use a 200px period to stay seamless. -->
+<section>
+  <p class="kicker">Movement 3 · Streams of risk</p>
+  <h2>Who stands in the middle?</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 320"
+    role="img"
+    aria-label="The baker and bank's swap streams routed through a dealer in the middle, with a clearinghouse standing behind the trade"
+  >
+    <defs>
+      <clipPath id="dealer-lane-top"><rect x="140" y="92" width="360" height="80" /></clipPath>
+      <clipPath id="dealer-lane-bot"><rect x="140" y="182" width="360" height="80" /></clipPath>
+
+      <!-- even (fixed) bars, baseline y=160, one 200px period (5 bars) -->
+      <g id="deal-fixed">
+        <line x1="120" y1="160" x2="120" y2="130" />
+        <line x1="160" y1="160" x2="160" y2="130" />
+        <line x1="200" y1="160" x2="200" y2="130" />
+        <line x1="240" y1="160" x2="240" y2="130" />
+        <line x1="280" y1="160" x2="280" y2="130" />
+      </g>
+      <!-- jagged (floating) bars, baseline y=235, one 200px period (5 bars) -->
+      <g id="deal-float">
+        <line x1="120" y1="235" x2="120" y2="209" />
+        <line x1="160" y1="235" x2="160" y2="189" />
+        <line x1="200" y1="235" x2="200" y2="217" />
+        <line x1="240" y1="235" x2="240" y2="195" />
+        <line x1="280" y1="235" x2="280" y2="205" />
+      </g>
+    </defs>
+
+    <!-- the three figures -->
+    <circle class="person" cx="68" cy="140" r="15" />
+    <path class="person" d="M48,186 C48,155 88,155 88,186" />
+    <text class="glyph-label" x="68" y="206">the baker</text>
+
+    <polyline class="person" points="524,150 572,126 620,150" />
+    <line class="person" x1="530" y1="150" x2="614" y2="150" />
+    <line class="person" x1="540" y1="150" x2="540" y2="178" />
+    <line class="person" x1="572" y1="150" x2="572" y2="178" />
+    <line class="person" x1="604" y1="150" x2="604" y2="178" />
+    <line class="person" x1="528" y1="178" x2="616" y2="178" />
+    <text class="glyph-label" x="572" y="200">the bank</text>
+
+    <!-- the two streams, persistent and marching the whole time -->
+    <g clip-path="url(#dealer-lane-top)">
+      <g class="stream-anim rightward calm">
+        <use href="#deal-fixed" x="0" />
+        <use href="#deal-fixed" x="200" />
+        <use href="#deal-fixed" x="400" />
+        <use href="#deal-fixed" x="600" />
+      </g>
+    </g>
+    <polyline class="flow calm" points="510,153 522,160 510,167" />
+
+    <g clip-path="url(#dealer-lane-bot)">
+      <g class="stream-anim leftward">
+        <use href="#deal-float" x="0" />
+        <use href="#deal-float" x="200" />
+        <use href="#deal-float" x="400" />
+        <use href="#deal-float" x="600" />
+      </g>
+    </g>
+    <polyline class="flow" points="130,228 118,235 130,242" />
+
+    <!-- beat B: the dealer slides into the middle, occluding the streams so each
+         becomes two segments meeting at it, and keeps a small sliver -->
+    <g class="fragment" data-fragment-index="0">
+      <rect class="box" style="fill: var(--bg)" x="290" y="120" width="60" height="124" rx="8" />
+      <text class="glyph-label" x="320" y="186">dealer</text>
+      <circle cx="320" cy="268" r="8" style="fill: var(--grain)" />
+      <text class="note muted" x="336" y="273">keeps a sliver</text>
+    </g>
+
+    <!-- beat C: the clearinghouse stands behind the whole trade -->
+    <g class="fragment" data-fragment-index="1">
+      <rect
+        x="118"
+        y="104"
+        width="404"
+        height="150"
+        rx="14"
+        fill="none"
+        style="stroke: var(--muted); stroke-width: 2; stroke-dasharray: 7 5"
+      />
+      <text class="glyph-label muted" x="320" y="98">clearinghouse</text>
+    </g>
+  </svg>
+
+  <div class="caption-stack">
+    <p class="fragment fade-out" data-fragment-index="0">We drew the swap as a clean deal between two parties.</p>
+    <p class="fragment fade-in-then-out" data-fragment-index="0">
+      In reality a <span class="accent">dealer</span> sits in the middle — matching them, for a small sliver.
+    </p>
+    <p class="fragment" data-fragment-index="1">
+      And behind the trade stands a <span class="accent">clearinghouse</span> — the intermediary from futures —
+      guaranteeing it.
+    </p>
+  </div>
+
+  <aside class="notes">
+    The two-party picture was a simplification. The baker rarely meets her perfect counterparty directly; a dealer — a
+    bank's markets desk — sits in the middle, matching the two sides and keeping a small sliver (the spread) for the
+    service. Watch the streams: each one now runs to the dealer and out the other side, two segments meeting in the
+    middle. And behind the whole trade stands the clearinghouse — the same grown-up referee from the futures slide — the
+    central counterparty that guarantees performance so nobody has to trust anybody personally. Dealer matches;
+    clearinghouse guarantees. Only split them apart further if someone asks.
+  </aside>
+</section>
+        <!-- CDS (step 21): the capstone. A pension fund holds a company's bond and dreads
+     a default. So it buys protection: a small, steady premium stream to a
+     protection seller (rhymes with the option's premium). Then the company
+     defaults, and the seller makes the fund whole with one big contingent
+     payment. The point: every prior instrument assumed the counterparty pays —
+     the CDS is the first that insures that very assumption. -->
+<section>
+  <p class="kicker">Movement 3 · Streams of risk</p>
+  <h2>Credit Default Swaps (CDS): Insuring the thing everyone assumed.</h2>
+
+  <svg
+    class="viz"
+    viewBox="0 0 640 340"
+    role="img"
+    aria-label="A pension fund pays a steady premium stream to a protection seller; the company defaults; the seller sends one big payment back"
+  >
+    <defs>
+      <clipPath id="cds-lane"><rect x="130" y="224" width="380" height="36" /></clipPath>
+      <!-- small, even premium payments, one 200px period (5 bars) -->
+      <g id="cds-premium">
+        <line x1="130" y1="250" x2="130" y2="230" />
+        <line x1="170" y1="250" x2="170" y2="230" />
+        <line x1="210" y1="250" x2="210" y2="230" />
+        <line x1="250" y1="250" x2="250" y2="230" />
+        <line x1="290" y1="250" x2="290" y2="230" />
+      </g>
+    </defs>
+
+    <!-- the pension fund (left) is present throughout -->
+    <circle class="person" cx="72" cy="132" r="15" />
+    <path class="person" d="M52,178 C52,147 92,147 92,178" />
+    <text class="glyph-label" x="72" y="198">pension fund</text>
+
+    <!-- beat 0 (visible at start): it holds the company's bond -->
+    <g class="fragment fade-out" data-fragment-index="1">
+      <polyline class="person" points="286,34 320,14 354,34" />
+      <line class="person" x1="292" y1="34" x2="348" y2="34" />
+      <line class="person" x1="300" y1="34" x2="300" y2="78" />
+      <line class="person" x1="320" y1="34" x2="320" y2="78" />
+      <line class="person" x1="340" y1="34" x2="340" y2="78" />
+      <line class="person" x1="288" y1="78" x2="352" y2="78" />
+      <text class="glyph-label" x="320" y="98">the company</text>
+      <line class="link" x1="96" y1="150" x2="296" y2="82" />
+      <text class="note muted" x="178" y="112" text-anchor="middle">its bond</text>
+    </g>
+
+    <!-- beat 1 (click): the protection seller + a small steady premium stream -->
+    <g class="fragment" data-fragment-index="0">
+      <circle class="person" cx="568" cy="132" r="15" />
+      <path class="person" d="M548,178 C548,147 588,147 588,178" />
+      <text class="glyph-label" x="568" y="198">protection seller</text>
+
+      <g clip-path="url(#cds-lane)">
+        <g class="stream-anim rightward soft">
+          <use href="#cds-premium" x="0" />
+          <use href="#cds-premium" x="200" />
+          <use href="#cds-premium" x="400" />
+          <use href="#cds-premium" x="600" />
+        </g>
+      </g>
+      <polyline class="flow" points="512,243 524,250 512,257" />
+      <text class="note muted" x="320" y="284" text-anchor="middle">a small, steady premium</text>
+    </g>
+
+    <!-- beat 2 (click): the company defaults — it collapses, red, with a shake -->
+    <g class="fragment" data-fragment-index="1">
+      <g class="cds-collapse" style="stroke: var(--bad)">
+        <polyline points="286,34 320,14 354,34" />
+        <line x1="292" y1="34" x2="348" y2="34" />
+        <line x1="300" y1="34" x2="300" y2="78" />
+        <line x1="340" y1="34" x2="340" y2="78" />
+        <line x1="288" y1="78" x2="352" y2="78" />
+        <polyline points="320,14 309,40 329,54 316,78" />
+      </g>
+      <text class="note bad" x="320" y="104" text-anchor="middle">default!</text>
+    </g>
+
+    <!-- beat 3 (click): one big contingent payback shoots back to make her whole -->
+    <path class="payback drawable fragment" data-fragment-index="2" pathLength="1" d="M 540 155 L 132 155" />
+    <polygon class="fragment" data-fragment-index="2" points="110,155 134,142 134,168" style="fill: var(--good)" />
+    <text class="note good fragment" data-fragment-index="2" x="330" y="142" text-anchor="middle">
+      one big payment — made whole
+    </text>
+  </svg>
+
+  <div class="caption-stack">
+    <p class="fragment fade-out" data-fragment-index="0">
+      A pension fund holds a company's bond — and dreads the company defaulting.
+    </p>
+    <p class="fragment fade-in-then-out" data-fragment-index="0">
+      So it buys protection: a small, steady <span class="accent">premium</span> to a protection seller.
+    </p>
+    <p class="fragment fade-in-then-out" data-fragment-index="1">Then the unthinkable — the company defaults.</p>
+    <p class="fragment fade-in-then-out" data-fragment-index="2">
+      The seller makes it whole — one big payment for all those small ones.
+    </p>
+    <p class="fragment" data-fragment-index="3">
+      It's <span class="accent">insurance</span> — like the option. The one tool that insures what all the others
+      assumed: that the other side pays.
+    </p>
+  </div>
+
+  <aside class="notes">
+    The capstone. A pension fund lent to a company — it holds the company's bond, and its nightmare is a default that
+    makes the bond worthless. So it buys a credit default swap: a small, steady premium paid to a protection seller —
+    deliberately the same shape as the option's premium-for-protection. Then the company defaults; the bond collapses.
+    And the seller pays one big contingent amount that makes the fund whole — many small payments, then one large
+    payback. Name the rhyme: a CDS is insurance, just like the option. And it's the capstone because every instrument
+    before it quietly assumed the counterparty would pay up — the CDS is the first one that insures that very
+    assumption. It points risk management at trust itself.
+  </aside>
+</section>
+
+        <!-- Movement 4 — Synthesis -->
+        <!-- Synthesis, slide 17 (step 22): collapse all five tools back to the one
+     sentence. A quick roll-call — each instrument a variation on the same idea —
+     then the five recede (dim) and the opening refrain crystallizes. -->
+<section>
+  <p class="kicker">Back to one idea</p>
+  <h2>Five tools. One idea.</h2>
+
+  <ul class="synth-list">
+    <li class="fragment">
+      <span class="tool">Forward</span> — a farmer locks his price with a handshake.
+    </li>
+    <li class="fragment">
+      <span class="tool">Future</span> — the same, but a clearinghouse lets strangers trade.
+    </li>
+    <li class="fragment">
+      <span class="tool">Option</span> — he pays a premium to keep the upside.
+    </li>
+    <li class="fragment">
+      <span class="tool">Swap</span> — a baker trades her bumpy payments for smooth ones.
+    </li>
+    <li class="fragment">
+      <span class="tool">Credit default swap</span> — a pension fund insures against a default.
+    </li>
+  </ul>
+
+  <p class="thesis reveal-in fragment" data-anim="collapsed" data-anim-target=".synth-list">
+    Every one <span class="accent">moves risk</span> — from someone who fears it to someone willing to bear it.
+  </p>
+
+  <aside class="notes">
+    The roll-call. Step through the five quickly — don't dwell; each is just a
+    variation on the same sentence. Then the payoff: the five recede and the
+    refrain that opened the talk crystallizes. Five elegant tools, all one idea —
+    moving risk from someone who fears it to someone willing to bear it.
+  </aside>
+</section>
+        <!-- Close, slide 18 (step 23): one honest line — tools move risk, they don't
+     erase it — then end constructive. Not a 2008 cautionary tale: the world has
+     risk, that's life, and now these tools are legible. Warm, unhurried. -->
+<section>
+  <p class="kicker">One honest line</p>
+  <p class="thesis">They move risk. They don't <span class="accent">erase</span> it.</p>
+  <p class="thesis reveal-in fragment muted">Forget that — and things break.</p>
+  <p class="reveal-in fragment">Remember it, and they're simply a good tool: old, human, and commonplace.</p>
+
+  <aside class="notes">
+    The honest close. These tools move risk; they don't make it vanish — and when people forget that, things break. But
+    don't end on fear, and don't give the 2008 lecture. End constructive: risk is just part of the world, that's life,
+    and these instruments are old, human, and everywhere. The audience can now see them for what they are. Warm,
+    unhurried — done.
+  </aside>
+</section>
+
+        <!-- Thank you -->
+        <!-- Thank you — the final slide. Bookends the title; warm and minimal. -->
+<section>
+  <h1>Thank you</h1>
+  <aside class="notes">Warm close. Pause, smile, open the floor.</aside>
+</section>
+      </div>
+    </div>
+
+    <!-- vendored reveal.js + notes plugin (UMD globals: Reveal, RevealNotes) -->
+    <script src="vendor/reveal/dist/reveal.js"></script>
+    <script src="vendor/reveal/dist/plugin/notes.js"></script>
+
+    <!-- our helpers, then the orchestrator (must load last) -->
+    <script src="js/includes.js"></script>
+    <script src="js/anim.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
