@@ -755,8 +755,9 @@
 </section>
         <!-- Swap, beat 2 (step 20): the plumbing. The tidy two-party picture is a
      simplification — a dealer sits in the middle, matching the two sides and
-     keeping a small sliver; behind the whole trade stands the clearinghouse, the
-     same referee from the futures slide, guaranteeing it. The two marching lanes
+     keeping a small sliver; the clearinghouse — the same referee from the futures
+     slide — is a separate institution the dealer clears through, drawn above the
+     dealer with an arrow pointing to it. The two marching lanes
      persist from beat 1; the dealer occludes the middle so each stream becomes
      two segments meeting at it. Bars use a 200px period to stay seamless. -->
 <section>
@@ -767,7 +768,7 @@
     class="viz"
     viewBox="0 0 640 320"
     role="img"
-    aria-label="The baker and bank's swap streams routed through a dealer in the middle, with a clearinghouse standing behind the trade"
+    aria-label="The baker and bank's swap streams routed through a dealer in the middle, with the dealer pointing up to a separate clearinghouse that guarantees the trade"
   >
     <defs>
       <clipPath id="dealer-lane-top"><rect x="140" y="92" width="360" height="80" /></clipPath>
@@ -834,18 +835,31 @@
       <text class="note muted" x="336" y="273">keeps a sliver</text>
     </g>
 
-    <!-- beat C: the clearinghouse stands behind the whole trade -->
+    <!-- beat C: the clearinghouse appears above the dealer as its own separate
+         institution; the dealer points up to it -->
     <g class="fragment" data-fragment-index="1">
+      <line
+        x1="320"
+        y1="120"
+        x2="320"
+        y2="80"
+        style="stroke: var(--muted); stroke-width: 2; stroke-dasharray: 7 5"
+      />
+      <polyline
+        points="313,81 320,74 327,81"
+        fill="none"
+        style="stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"
+      />
       <rect
-        x="118"
-        y="104"
-        width="404"
-        height="150"
-        rx="14"
+        x="250"
+        y="30"
+        width="140"
+        height="42"
+        rx="8"
         fill="none"
         style="stroke: var(--muted); stroke-width: 2; stroke-dasharray: 7 5"
       />
-      <text class="glyph-label muted" x="320" y="98">clearinghouse</text>
+      <text class="glyph-label muted" x="320" y="56">clearinghouse</text>
     </g>
   </svg>
 
@@ -869,8 +883,9 @@
     clearinghouse guarantees. Only split them apart further if someone asks.
   </aside>
 </section>
-        <!-- CDS (step 21): the capstone. A pension fund holds a company's bond and dreads
-     a default. So it buys protection: a small, steady premium stream to a
+        <!-- CDS (step 21): the capstone. Opens on the pension fund alone; a click draws
+     the bond link across to the company, then the first caption lands. The fund
+     dreads a default, so it buys protection: a small, steady premium stream to a
      protection seller (rhymes with the option's premium). Then the company
      defaults, and the seller makes the fund whole with one big contingent
      payment. The point: every prior instrument assumed the counterparty pays —
@@ -902,21 +917,32 @@
     <path class="person" d="M52,178 C52,147 92,147 92,178" />
     <text class="glyph-label" x="72" y="198">pension fund</text>
 
-    <!-- beat 0 (visible at start): it holds the company's bond -->
-    <g class="fragment fade-out" data-fragment-index="1">
-      <polyline class="person" points="286,34 320,14 354,34" />
-      <line class="person" x1="292" y1="34" x2="348" y2="34" />
-      <line class="person" x1="300" y1="34" x2="300" y2="78" />
-      <line class="person" x1="320" y1="34" x2="320" y2="78" />
-      <line class="person" x1="340" y1="34" x2="340" y2="78" />
-      <line class="person" x1="288" y1="78" x2="352" y2="78" />
-      <text class="glyph-label" x="320" y="98">the company</text>
-      <line class="link" x1="96" y1="150" x2="296" y2="82" />
-      <text class="note muted" x="178" y="112" text-anchor="middle">its bond</text>
+    <!-- beat 1 (click): the bond link draws across to the company, which appears.
+         The outer fade-out group retires the healthy company at the default beat. -->
+    <g class="fragment fade-out" data-fragment-index="3">
+      <!-- styled like .link but without vector-effect, which breaks the
+           pathLength/dash draw-on trick (see .payoff-line note in viz.css) -->
+      <path
+        class="drawable fragment"
+        data-fragment-index="0"
+        pathLength="1"
+        d="M 96 150 L 296 82"
+        style="fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round"
+      />
+      <g class="fragment" data-fragment-index="0">
+        <polyline class="person" points="286,34 320,14 354,34" />
+        <line class="person" x1="292" y1="34" x2="348" y2="34" />
+        <line class="person" x1="300" y1="34" x2="300" y2="78" />
+        <line class="person" x1="320" y1="34" x2="320" y2="78" />
+        <line class="person" x1="340" y1="34" x2="340" y2="78" />
+        <line class="person" x1="288" y1="78" x2="352" y2="78" />
+        <text class="glyph-label" x="320" y="98">the company</text>
+        <text class="note muted" x="178" y="112" text-anchor="middle">its bond</text>
+      </g>
     </g>
 
-    <!-- beat 1 (click): the protection seller + a small steady premium stream -->
-    <g class="fragment" data-fragment-index="0">
+    <!-- beat 3 (click): the protection seller + a small steady premium stream -->
+    <g class="fragment" data-fragment-index="2">
       <circle class="person" cx="568" cy="132" r="15" />
       <path class="person" d="M548,178 C548,147 588,147 588,178" />
       <text class="glyph-label" x="568" y="198">protection seller</text>
@@ -933,8 +959,8 @@
       <text class="note muted" x="320" y="284" text-anchor="middle">a small, steady premium</text>
     </g>
 
-    <!-- beat 2 (click): the company defaults — it collapses, red, with a shake -->
-    <g class="fragment" data-fragment-index="1">
+    <!-- beat 4 (click): the company defaults — it collapses, red, with a shake -->
+    <g class="fragment" data-fragment-index="3">
       <g class="cds-collapse" style="stroke: var(--bad)">
         <polyline points="286,34 320,14 354,34" />
         <line x1="292" y1="34" x2="348" y2="34" />
@@ -946,26 +972,23 @@
       <text class="note bad" x="320" y="104" text-anchor="middle">default!</text>
     </g>
 
-    <!-- beat 3 (click): one big contingent payback shoots back to make her whole -->
-    <path class="payback drawable fragment" data-fragment-index="2" pathLength="1" d="M 540 155 L 132 155" />
-    <polygon class="fragment" data-fragment-index="2" points="110,155 134,142 134,168" style="fill: var(--good)" />
-    <text class="note good fragment" data-fragment-index="2" x="330" y="142" text-anchor="middle">
+    <!-- beat 5 (click): one big contingent payback shoots back to make her whole -->
+    <path class="payback drawable fragment" data-fragment-index="4" pathLength="1" d="M 540 155 L 132 155" />
+    <polygon class="fragment" data-fragment-index="4" points="110,155 134,142 134,168" style="fill: var(--good)" />
+    <text class="note good fragment" data-fragment-index="4" x="330" y="142" text-anchor="middle">
       one big payment — made whole
     </text>
   </svg>
 
   <div class="caption-stack">
-    <p class="fragment fade-out" data-fragment-index="0">
+    <p class="fragment fade-in-then-out" data-fragment-index="1">
       A pension fund holds a company's bond — and dreads the company defaulting.
     </p>
-    <p class="fragment fade-in-then-out" data-fragment-index="0">
+    <p class="fragment fade-in-then-out" data-fragment-index="2">
       So it buys protection: a small, steady <span class="accent">premium</span> to a protection seller.
     </p>
-    <p class="fragment fade-in-then-out" data-fragment-index="1">Then the unthinkable — the company defaults.</p>
-    <p class="fragment fade-in-then-out" data-fragment-index="2">
-      The seller makes it whole — one big payment for all those small ones.
-    </p>
-    <p class="fragment" data-fragment-index="3">
+    <p class="fragment fade-in-then-out" data-fragment-index="3">Then the unthinkable — the company defaults.</p>
+    <p class="fragment" data-fragment-index="5">
       It's <span class="accent">insurance</span> — like the option. The one tool that insures what all the others
       assumed: that the other side pays.
     </p>
