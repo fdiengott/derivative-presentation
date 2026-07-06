@@ -1,7 +1,8 @@
 <!-- Swap, beat 2 (step 20): the plumbing. The tidy two-party picture is a
      simplification — a dealer sits in the middle, matching the two sides and
-     keeping a small sliver; behind the whole trade stands the clearinghouse, the
-     same referee from the futures slide, guaranteeing it. The two marching lanes
+     keeping a small sliver; the clearinghouse — the same referee from the futures
+     slide — is a separate institution the dealer clears through, drawn above the
+     dealer with an arrow pointing to it. The two marching lanes
      persist from beat 1; the dealer occludes the middle so each stream becomes
      two segments meeting at it. Bars use a 200px period to stay seamless. -->
 <section>
@@ -12,7 +13,7 @@
     class="viz"
     viewBox="0 0 640 320"
     role="img"
-    aria-label="The baker and bank's swap streams routed through a dealer in the middle, with a clearinghouse standing behind the trade"
+    aria-label="The baker and bank's swap streams routed through a dealer in the middle, with the dealer pointing up to a separate clearinghouse that guarantees the trade"
   >
     <defs>
       <clipPath id="dealer-lane-top"><rect x="140" y="92" width="360" height="80" /></clipPath>
@@ -79,18 +80,31 @@
       <text class="note muted" x="336" y="273">keeps a sliver</text>
     </g>
 
-    <!-- beat C: the clearinghouse stands behind the whole trade -->
+    <!-- beat C: the clearinghouse appears above the dealer as its own separate
+         institution; the dealer points up to it -->
     <g class="fragment" data-fragment-index="1">
+      <line
+        x1="320"
+        y1="120"
+        x2="320"
+        y2="80"
+        style="stroke: var(--muted); stroke-width: 2; stroke-dasharray: 7 5"
+      />
+      <polyline
+        points="313,81 320,74 327,81"
+        fill="none"
+        style="stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"
+      />
       <rect
-        x="118"
-        y="104"
-        width="404"
-        height="150"
-        rx="14"
+        x="250"
+        y="30"
+        width="140"
+        height="42"
+        rx="8"
         fill="none"
         style="stroke: var(--muted); stroke-width: 2; stroke-dasharray: 7 5"
       />
-      <text class="glyph-label muted" x="320" y="98">clearinghouse</text>
+      <text class="glyph-label muted" x="320" y="56">clearinghouse</text>
     </g>
   </svg>
 
