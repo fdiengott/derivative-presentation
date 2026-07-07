@@ -30,7 +30,7 @@
   color: var(--ink);
   /* Slightly shorter than the viewport so the centered deck sits a touch
      above dead-center instead of crowding the bottom edge. */
-  height: 94vh;
+  height: 100vh;
 }
 
 .reveal-viewport {
