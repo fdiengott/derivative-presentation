@@ -6,6 +6,9 @@
   display: block;
   margin: 0.4em auto 0;
   width: 64%;
+  /* 64% of the old 960px slide box — keeps charts the same size (and slides
+     the same height) now that the slide box is wider. */
+  max-width: 615px;
   height: auto;
   overflow: visible;
 }
@@ -55,7 +58,7 @@
   stroke-dasharray: 5 6;
 }
 
-/* The strike: a flat, soft reference line — the price the option lets him sell
+/* The strike: a flat, soft reference line — the price the option lets the farmer sell
  * at. Subordinate to the outcome line so the lift-off reads as the action. */
 .viz .strike {
   stroke: var(--accent-soft);
@@ -70,7 +73,7 @@
   stroke-width: 3.5;
 }
 
-/* The floor continued: where a forward would have kept him. The outcome line
+/* The floor continued: where a forward would have kept them. The outcome line
  * peels up and away from this ghost at the strike-crossing. */
 .viz .outcome.ghost {
   stroke: var(--line);
@@ -142,7 +145,7 @@
 }
 
 /* CDS capstone: the one big contingent payback (many small premiums, then this).
- * Drawn thick and drawn-on so it visibly shoots across to make her whole. */
+ * Drawn thick and drawn-on so it visibly shoots across to make the fund whole. */
 .viz .payback {
   fill: none;
   stroke: var(--good);
@@ -275,9 +278,13 @@
   vector-effect: non-scaling-stroke;
 }
 
-.viz.payoff {
+/* Needs the .reveal svg prefix to out-rank the base svg.viz sizing. Kept small:
+ * two of these stack vertically, so the pair (plus titles, text, and divider)
+ * must stay inside the 700px slide box. */
+.reveal svg.viz.payoff {
   width: 92%;
-  margin: 0.1em auto 0;
+  max-width: 340px;
+  margin: 0.1em 0 0;
 }
 .viz .payoff-line {
   stroke: var(--accent);

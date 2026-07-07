@@ -11,8 +11,8 @@
   --accent: #c8553d; /* warm accent for the "active" line/arrow */
   --accent-soft: #e7b9ad; /* faded accent */
   --line: #cfcabf; /* axes / neutral chart strokes */
-  --good: #4a7c59; /* "saved him" / favorable world */
-  --bad: #b0411f; /* "cost him" world (a darker accent) */
+  --good: #4a7c59; /* "saved them" / favorable world */
+  --bad: #b0411f; /* "cost them" world (a darker accent) */
   --grain: #c4a35a; /* wheat gold — the farmer's crop */
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1); /* gentle ease-out for reveals */
@@ -28,6 +28,9 @@
   font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   font-size: 38px;
   color: var(--ink);
+  /* Slightly shorter than the viewport so the centered deck sits a touch
+     above dead-center instead of crowding the bottom edge. */
+  height: 94vh;
 }
 
 .reveal-viewport {
@@ -53,11 +56,6 @@
 
 .reveal p {
   line-height: 1.45;
-}
-
-.slides {
-  inset: 0 !important;
-  transform: scale(1.08) !important;
 }
 
 .muted {
@@ -158,10 +156,12 @@
   margin: 0;
 }
 /* the buyer's intro and its definition share one slot, so the definition
- * replaces the intro in place rather than pushing the chart down. */
+ * replaces the intro in place rather than pushing the chart down. Sized for
+ * the short definition line, not the longer intro: the intro may spill into
+ * the chart area below, but the chart only draws after the intro has faded. */
 .reveal .ot-textswap {
   position: relative;
-  min-height: 2.6em;
+  min-height: 1.4em;
   margin-top: 0.15em;
 }
 .reveal .ot-textswap > p {
