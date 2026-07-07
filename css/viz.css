@@ -6,9 +6,10 @@
   display: block;
   margin: 0.4em auto 0;
   width: 64%;
-  /* 64% of the old 960px slide box — keeps charts the same size (and slides
-     the same height) now that the slide box is wider. */
-  max-width: 615px;
+  /* Absolute cap so charts don't grow with the wider slide box. Sized so the
+     tallest charts (640×400) leave room for a heading and caption lines
+     inside the 700px slide height. */
+  max-width: 560px;
   height: auto;
   overflow: visible;
 }

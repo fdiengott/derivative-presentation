@@ -28,8 +28,6 @@
   font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   font-size: 38px;
   color: var(--ink);
-  /* Slightly shorter than the viewport so the centered deck sits a touch
-     above dead-center instead of crowding the bottom edge. */
   height: 100vh;
 }
 
@@ -130,6 +128,16 @@
   margin: 0;
   font-size: 0.82em;
   line-height: 1.35;
+}
+
+/* Caption beats that accumulate below a chart (option): same voice as the
+ * caption-stack, but the lines stay on screen and stack — so they're set
+ * tight enough that a full temporal chart plus three of them still fits the
+ * slide box. */
+.reveal .caption-lines > p {
+  font-size: 0.82em;
+  line-height: 1.35;
+  margin: 0.35em 0;
 }
 
 /* ---- Option types (puts & calls): a 2×2 — Put over Call, split by a rule.
